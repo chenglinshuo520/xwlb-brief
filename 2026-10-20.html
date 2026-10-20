@@ -31,6 +31,19 @@
   .card { background:var(--panel); border:1px solid var(--line); border-radius:14px;
            padding:18px 20px; margin-bottom:14px; }
   .meta { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:12px; color:var(--dim); }
+  .tts-btn { margin:0; background:var(--panel2); border:1px solid var(--line); color:var(--dim);
+              border-radius:99px; padding:2px 10px; font-size:11px; cursor:pointer; line-height:1.6; }
+  .tts-btn:hover { color:var(--accent); border-color:var(--accent); }
+  .card.speaking { outline:2px solid var(--accent); outline-offset:2px; }
+  #tts-bar { position:sticky; top:0; z-index:9; display:flex; gap:8px; align-items:center;
+              flex-wrap:wrap; background:var(--panel); border:1px solid var(--line);
+              border-radius:12px; padding:8px 12px; margin:0 0 18px; font-size:12px; color:var(--dim); }
+  #tts-bar button { background:var(--panel2); border:1px solid var(--line); color:var(--mid);
+                     border-radius:99px; padding:3px 12px; font-size:12px; cursor:pointer; }
+  #tts-bar button:hover { color:var(--accent); border-color:var(--accent); }
+  #tts-bar select { background:var(--panel2); border:1px solid var(--line); color:var(--mid);
+                     border-radius:8px; padding:2px 6px; font-size:12px; }
+  #tts-status { color:var(--accent); }
   .no { font-family:ui-monospace,Consolas,monospace; color:var(--accent); }
   .badge { padding:2px 8px; border-radius:99px; font-size:11px; border:1px solid transparent; }
   .s-high { background:rgba(74,222,128,.12); color:var(--ok); border-color:rgba(74,222,128,.25); }
@@ -106,6 +119,20 @@
     条目与正文为真实抓取；解读由模型生成，逐条通过 G1/G2/G3/G5 闸门，未通过者不出现在页面。排序尚未接入，当前按播出顺序排列。
   </div>
 
+  <div id="tts-bar">
+    <button id="tts-all" type="button">▶ 连续朗读</button>
+    <button id="tts-stop" type="button">■ 停止</button>
+    <label>语速
+      <select id="tts-rate">
+        <option value="0.8">0.8×</option>
+        <option value="1" selected>1.0×</option>
+        <option value="1.2">1.2×</option>
+        <option value="1.5">1.5×</option>
+      </select>
+    </label>
+    <span id="tts-status"></span>
+  </div>
+
   <div class="stats" style="">
     <div class="stat"><b>20</b><span>处理单元</span></div>
     <div class="stat"><b>9</b><span>独立新闻</span></div>
@@ -122,8 +149,10 @@
           <span class="badge s-low">信号 弱</span>
           <span class="badge a-none">无关</span>
           <span class="len">1013字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDEtXjptZENQMmgwmoBUm3U261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>习近平致信祝贺中央社会主义学院建院70周年强调 持续加强政治培训广泛凝聚政治共识 更好服务党和国家工作大局 王沪宁出席庆祝大会并讲话。中央社会主义学院建院70周年之际，习近平发来贺信，王沪宁出席庆祝大会并讲话，李干杰主持，武维华、丁仲礼分别致辞。贺信要求持续加强政治培训、广泛凝聚政治共识，在统一战线人才培养、理论研究、方针政策宣传等方面进一步发挥作用。这为统一战线人才教育培养定下方向，社院系统办学与培训任务将随之加重。。文本层。以贺信加庆祝大会的规格重申“社院姓社”，强调政治培训与政治共识。。权力层。总书记贺信、政治局常委出席讲话，层级高，与既有统战目标一致。。兑现层。只有方向性要求，没有钱、考核指标、名单或标准。。商业层。与生意基本无关。。反方一句。但也可能带动社院系统教学科研与培训场地的采购需求。。证伪条件。若后续出现社院建设专项经费或培训规模硬指标，这条判断就是错的。</div>
         <h3>习近平致信祝贺中央社会主义学院建院70周年强调 持续加强政治培训广泛凝聚政治共识 更好服务党和国家工作大局 王沪宁出席庆祝大会并讲话</h3>
         <p class="brief">中央社会主义学院建院70周年之际，习近平发来贺信，王沪宁出席庆祝大会并讲话，李干杰主持，武维华、丁仲礼分别致辞。贺信要求持续加强政治培训、广泛凝聚政治共识，在统一战线人才培养、理论研究、方针政策宣传等方面进一步发挥作用。这为统一战线人才教育培养定下方向，社院系统办学与培训任务将随之加重。</p>
         <details>
@@ -144,8 +173,10 @@
           <span class="badge s-low">信号 弱</span>
           <span class="badge a-none">无关</span>
           <span class="len">50字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDEIscyAVsjkfC5dRgomWKz261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>央视快评：持续加强政治培训 广泛凝聚政治共识。央视10月20日播发快评《持续加强政治培训 广泛凝聚政治共识》。快评提出加强政治培训、凝聚政治共识的方向。这一表态面向干部教育培训领域，释放持续强化政治培训的信号。。文本层。以央视快评形式提出“持续加强政治培训”，属提法层面的表态。。权力层。央视快评属媒体评论文种，非正式文件，未与既有目标冲突。。兑现层。原文无资金、考核、名单、标准等任何兑现细节。。商业层。与生意基本无关。。反方一句。但也可能后续配套培训安排落地，带动相关培训需求。。证伪条件。若后续出现具体培训资金或考核指标，这条判断就是错的。</div>
         <h3>央视快评：持续加强政治培训 广泛凝聚政治共识</h3>
         <p class="brief">央视10月20日播发快评《持续加强政治培训 广泛凝聚政治共识》。快评提出加强政治培训、凝聚政治共识的方向。这一表态面向干部教育培训领域，释放持续强化政治培训的信号。</p>
         <details>
@@ -166,8 +197,10 @@
           <span class="badge s-low">信号 弱</span>
           <span class="badge a-none">无关</span>
           <span class="len">1452字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDEkswqS8LkoDOQdmPwOR95261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>【赓续长征精神 奋进复兴征程】传承红色血脉 打好实现建军一百年奋斗目标攻坚战。长征英雄部队官兵持续传承红色血脉：陆军第74集团军某旅“大渡河连”每日呼点17名勇士名字，南昌舰、运-20部队、火箭军某旅聚力练兵备战。全军全力以赴打好实现建军一百年奋斗目标攻坚战。影响指向军队战斗力建设与红色教育，涉及部队与军事博物馆参观热潮。。文本层。口径延续长征精神与建军一百年奋斗目标，提法无新增表述。权力层。主题报道，属宣传文种，与既有强军目标一致无冲突。兑现层。无钱、无考核、无名单、无标准，仅精神动员。商业层。与生意基本无关。反方一句。但也可能带动军事博物馆展览与红色旅游的短期人流。证伪条件。若后续出台具体训练指标或装备采购清单，这条判断就是错的</div>
         <h3>【赓续长征精神 奋进复兴征程】传承红色血脉 打好实现建军一百年奋斗目标攻坚战</h3>
         <p class="brief">长征英雄部队官兵持续传承红色血脉：陆军第74集团军某旅“大渡河连”每日呼点17名勇士名字，南昌舰、运-20部队、火箭军某旅聚力练兵备战。全军全力以赴打好实现建军一百年奋斗目标攻坚战。影响指向军队战斗力建设与红色教育，涉及部队与军事博物馆参观热潮。</p>
         <details>
@@ -188,8 +221,10 @@
           <span class="badge s-mid">信号 中</span>
           <span class="badge a-watch">观察</span>
           <span class="len">617字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDEuGBT1Xm2cmDIDEWzfcOA261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>李强出席上海合作组织成员国政府首脑（总理）理事会第二十五次会议。当地时间10月20日，国务院总理李强在塔吉克斯坦杜尚别出席上合组织成员国政府首脑（总理）理事会第二十五次会议，指出今年是上合组织成立25周年，并同成员国与会领导人签署发表联合公报，批准各领域合作文件和上合组织建设相关决议。会议聚焦提升组织运行效能、做实做强合作项目，对区域经贸与运输通道合作形成推动。。文本层。以成立25周年为节点，强调“道”与“术”并重、提升组织运行效能。。权力层。总理出席并签署联合公报，批准合作文件，与既有高质量发展方向一致。。兑现层。仅提及批准各领域合作文件和建设决议，无金额、考核、名单或标准。。商业层。指向国际运输通道与产供链合作，普通人难以直接承接。。反方一句。但也可能合作文件停留在框架层面，缺少可落地项目。。证伪条件。若后续公布具体合作项目与资金安排，这条判断就是错的。</div>
         <h3>李强出席上海合作组织成员国政府首脑（总理）理事会第二十五次会议</h3>
         <p class="brief">当地时间10月20日，国务院总理李强在塔吉克斯坦杜尚别出席上合组织成员国政府首脑（总理）理事会第二十五次会议，指出今年是上合组织成立25周年，并同成员国与会领导人签署发表联合公报，批准各领域合作文件和上合组织建设相关决议。会议聚焦提升组织运行效能、做实做强合作项目，对区域经贸与运输通道合作形成推动。</p>
         <details>
@@ -210,8 +245,10 @@
           <span class="badge s-low">信号 弱</span>
           <span class="badge a-none">无关</span>
           <span class="len">296字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDE0P7aDUboV2OzZ7ep4ahD261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>李强会见伊朗第一副总统。当地时间10月19日，国务院总理李强在杜尚别出席上合组织成员国政府首脑（总理）理事会第二十五次会议期间会见伊朗第一副总统阿雷夫。李强表示中伊建交55年来关系平稳健康发展，愿推动各领域交流合作取得新进展；阿雷夫表示伊方愿加强合作，支持习近平主席促进中东和平安全的重要倡议，愿通过对话化解分歧。。文本层。文本层：以建交55年为节点重申合作意愿，未提出新提法或新机制。。权力层。权力层：总理级会见第一副总统，属上合会议期间双边安排，与既有外交目标一致。。兑现层。兑现层：无资金、考核、名单或标准等具体安排。。商业层。商业层：与生意基本无关。。反方一句。但也可能后续有具体合作文件落地。。证伪条件。若会后公布具体合作项目或金额，这条判断就是错的。</div>
         <h3>李强会见伊朗第一副总统</h3>
         <p class="brief">当地时间10月19日，国务院总理李强在杜尚别出席上合组织成员国政府首脑（总理）理事会第二十五次会议期间会见伊朗第一副总统阿雷夫。李强表示中伊建交55年来关系平稳健康发展，愿推动各领域交流合作取得新进展；阿雷夫表示伊方愿加强合作，支持习近平主席促进中东和平安全的重要倡议，愿通过对话化解分歧。</p>
         <details>
@@ -232,8 +269,10 @@
           <span class="badge s-low">信号 弱</span>
           <span class="badge a-watch">观察</span>
           <span class="len">301字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDEiZy5tN7j4kDzreUDZ0yw261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>李强会见白俄罗斯总理。当地时间10月19日，李强在杜尚别出席上合组织总理理事会第二十五次会议期间会见白俄罗斯总理图尔钦。中方提出深化贸易投资、数字经济、人文等领域合作；白方以明年两国建交35周年为契机推动合作。双方加强地区国际事务协调。。文本层。沿用全天候全面战略伙伴关系提法，新增数字经济合作方向。。权力层。总理级会见，属上合会议期间双边安排，与既有合作目标不冲突。。兑现层。无具体金额、项目清单或考核指标，仅方向性表态。。商业层。数字经济、贸易投资属方向性供给信号，普通人暂无具体承接入口。。反方一句。但也可能仅属上合会议期间例行双边会见，无实质合作落地。。证伪条件。若后续公布具体贸易投资协议或数字经济项目清单，这条判断就是错的。</div>
         <h3>李强会见白俄罗斯总理</h3>
         <p class="brief">当地时间10月19日，李强在杜尚别出席上合组织总理理事会第二十五次会议期间会见白俄罗斯总理图尔钦。中方提出深化贸易投资、数字经济、人文等领域合作；白方以明年两国建交35周年为契机推动合作。双方加强地区国际事务协调。</p>
         <details open>
@@ -254,8 +293,10 @@
           <span class="badge s-mid">信号 中</span>
           <span class="badge a-watch">观察</span>
           <span class="len">592字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDEVF5RE2xxfWXehjaPPHKj261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>丁薛祥在河北雄安新区出席国家数据集团有限公司成立大会并调研。国家数据集团有限公司20日在河北雄安新区成立，中共中央政治局常委、国务院副总理丁薛祥出席并揭牌。丁薛祥要求公司做好组建运营，打造世界一流数据科技企业，统筹发展和安全，深化数据要素服务，加快数据基础设施建设。数据产业将获得专门央企主体和部门地方协同支持。。文本层。新设央企落地雄安，数据要素从政策提法转为专门公司主体。。权力层。政治局常委级出席揭牌，组建运营与数字中国目标一致。。兑现层。原文只有成立与要求，未见资金规模、考核指标或名单。。商业层。属数据基础设施与要素服务供给端，普通人难直接承接。。反方一句。但也可能公司尚处组建期，业务边界和资源投放未明。。证伪条件。若后续公布具体投资额或项目清单，这条判断就是错的。</div>
         <h3>丁薛祥在河北雄安新区出席国家数据集团有限公司成立大会并调研</h3>
         <p class="brief">国家数据集团有限公司20日在河北雄安新区成立，中共中央政治局常委、国务院副总理丁薛祥出席并揭牌。丁薛祥要求公司做好组建运营，打造世界一流数据科技企业，统筹发展和安全，深化数据要素服务，加快数据基础设施建设。数据产业将获得专门央企主体和部门地方协同支持。</p>
         <details>
@@ -276,8 +317,10 @@
           <span class="badge s-mid">信号 中</span>
           <span class="badge a-watch">观察</span>
           <span class="len">562字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDEyCplw46cbRAUththjCZS261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>【“十五五”开好局起好步】我国首次编制文化遗产保护传承五年规划。国务院新闻办10月20日发布会介绍《文化遗产保护传承“十五五”规划》，坚持保护第一、合理利用、最小干预，目标到2030年文化遗产大保护格局基本形成。期间开展第二次全国可移动文物普查和第二次全国非遗普查，实施名城街区村镇保护提升工程。影响指向文物与非遗领域监管趋严、普查建档需求上升。。文本层。首次编制文化遗产保护传承五年规划，提法从单项保护转向系统性保护和统一监管。。权力层。国务院新闻办发布会，中央文化遗产保护委员会办公室统筹，推动保护法立法。。兑现层。有2030年目标和两次全国普查安排，但未提资金额度、考核名单和具体标准。。商业层。偏供给端，普查建档、保护工程和博物馆管理产生服务需求，普通人直接承接门槛高。。反方一句。但也可能规划落地依赖地方配套，普查与保护工程的实际投入节奏慢于文件表述。。证伪条件。若后续未见普查经费与地方实施方案落地，这条判断就是错的。</div>
         <h3>【“十五五”开好局起好步】我国首次编制文化遗产保护传承五年规划</h3>
         <p class="brief">国务院新闻办10月20日发布会介绍《文化遗产保护传承“十五五”规划》，坚持保护第一、合理利用、最小干预，目标到2030年文化遗产大保护格局基本形成。期间开展第二次全国可移动文物普查和第二次全国非遗普查，实施名城街区村镇保护提升工程。影响指向文物与非遗领域监管趋严、普查建档需求上升。</p>
         <details>
@@ -298,8 +341,10 @@
           <span class="badge s-high">信号 强</span>
           <span class="badge a-watch">观察</span>
           <span class="len">389字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDE3fTZ1MbapIqRiFntowsd261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>前三季度规模以上工业增加值同比增长5.3%。国务院新闻办10月20日发布会，工业和信息化部公布：前三季度规模以上工业增加值同比增长5.3%，工业对经济增长贡献率保持在35%左右；前8个月规模以上工业企业利润总额同比增长15.7%。规模以上高技术制造业增加值同比增长14.3%。工业效益与生产同步增长，结构向高端装备和先进制造倾斜。。文本层。发布会口径把工业增长与利润、高技术制造并列陈述，突出结构向新向优。。权力层。国新办发布会由工信部发布，属部委层级数据通报，与稳增长目标一致。。兑现层。原文只给增速数字，未列资金、考核名单或行业标准细则。。商业层。供给端设备更新与高技术制造扩张，普通人可关注配套服务与用工需求。。反方一句。但也可能利润增长集中于上游，下游中小企业感受不明显。。证伪条件。若后续公布的前三季度工业企业利润增速低于前8个月的15.7%，这条判断就是错的。</div>
         <h3>前三季度规模以上工业增加值同比增长5.3%</h3>
         <p class="brief">国务院新闻办10月20日发布会，工业和信息化部公布：前三季度规模以上工业增加值同比增长5.3%，工业对经济增长贡献率保持在35%左右；前8个月规模以上工业企业利润总额同比增长15.7%。规模以上高技术制造业增加值同比增长14.3%。工业效益与生产同步增长，结构向高端装备和先进制造倾斜。</p>
         <details>
@@ -320,8 +365,10 @@
           <span class="badge s-mid">信号 中</span>
           <span class="badge a-watch">观察</span>
           <span class="len">119字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDETUD7YJf39sZrLjjFhYqZ261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>第140届广交会首期举办335场新品首发活动。第140届广交会首期展览10月19日闭展，214个国家和地区的18.9万名境外采购商到会，比上一届增长13.3%，到会人数创历史新高。其间举办335场新品首发活动，服务机器人、智能制造、新能源等首发新品数量增长约20%。采购商到会与首发活动同步走高，展会的成交与订单将向新品集中的行业倾斜。。文本层。提法上突出“创历史新高”与“首发新品数量增长约20%”，把到会人数与新品首发并列呈现。。权力层。商务部主办的广交会以展会口径发布，与稳外贸、扩进口的既有方向一致，无冲突。。兑现层。只有到会人数、活动场次和增速，未见成交额、订单量、采购清单或考核指标。。商业层。需求侧采购商到会增长，供给侧新品集中在服务机器人、智能制造、新能源，普通人可做配套代工或零部件，直接接单门槛高。。反方一句。但也可能到会人数增长只反映出行恢复，实际成交与新品转化未同步。。证伪条件。若后续公布的首期成交额与订单量未随到会人数增长，这条判断就是错的。</div>
         <h3>第140届广交会首期举办335场新品首发活动</h3>
         <p class="brief">第140届广交会首期展览10月19日闭展，214个国家和地区的18.9万名境外采购商到会，比上一届增长13.3%，到会人数创历史新高。其间举办335场新品首发活动，服务机器人、智能制造、新能源等首发新品数量增长约20%。采购商到会与首发活动同步走高，展会的成交与订单将向新品集中的行业倾斜。</p>
         <details>
@@ -342,8 +389,10 @@
           <span class="badge s-mid">信号 中</span>
           <span class="badge a-watch">观察</span>
           <span class="len">105字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDETUD7YJf39sZrLjjFhYqZ261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>南水北调东线启动2026—2027年度全线调水。10月20日，南水北调东线启动2026—2027年度全线调水。东线通水以来完成13个年度调水任务，累计抽引长江水超530亿立方米，沿线受益人口超8500万人。调水规模持续，沿线供水保障延续。。文本层。年度调水启动，延续既有口径，无新提法。。权力层。企业层面发布，属常规调度，与既定供水目标一致。。兑现层。有累计调水量和受益人口数据，无新增资金或考核细节。。商业层。属公共供水供给，普通人直接商业接入空间有限。。反方一句。但也可能调水启动对沿线局部用水和农业安排产生实际影响。。证伪条件。若后续无配套工程或用水分配调整，这条判断就是错的。</div>
         <h3>南水北调东线启动2026—2027年度全线调水</h3>
         <p class="brief">10月20日，南水北调东线启动2026—2027年度全线调水。东线通水以来完成13个年度调水任务，累计抽引长江水超530亿立方米，沿线受益人口超8500万人。调水规模持续，沿线供水保障延续。</p>
         <details>
@@ -364,8 +413,10 @@
           <span class="badge s-mid">信号 中</span>
           <span class="badge a-watch">观察</span>
           <span class="len">115字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDETUD7YJf39sZrLjjFhYqZ261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>今年三季度全国共1.92亿人次出入境。国家移民管理局10月20日发布，今年三季度全国出入境1.92亿人次，同比上升7.9%。其中内地居民9596万人次、港澳台居民7314万人次、外国人2327.2万人次，同比分别上升7.4%、6.4%、15.6%。外国人出入境增速高于整体，跨境人员流动对口岸服务、交通住宿等环节形成需求。。文本层。以季度总量口径披露出入境人次，并分列内地居民、港澳台居民、外国人三类。。权力层。国家移民管理局发布统计数据，属常规季度通报，与既有管理目标不冲突。。兑现层。仅有总量与同比数据，未涉及资金、考核名单或具体执行标准。。商业层。需求端信号，外国人增速突出，普通人可关注口岸周边服务但缺具体承接细节。。反方一句。但也可能外国人增速高与基数较小有关，绝对量仍低于内地居民和港澳台居民。。证伪条件。若后续季度外国人出入境人次同比增速回落至整体以下，这条判断就是错的。</div>
         <h3>今年三季度全国共1.92亿人次出入境</h3>
         <p class="brief">国家移民管理局10月20日发布，今年三季度全国出入境1.92亿人次，同比上升7.9%。其中内地居民9596万人次、港澳台居民7314万人次、外国人2327.2万人次，同比分别上升7.4%、6.4%、15.6%。外国人出入境增速高于整体，跨境人员流动对口岸服务、交通住宿等环节形成需求。</p>
         <details>
@@ -386,8 +437,10 @@
           <span class="badge s-mid">信号 中</span>
           <span class="badge a-watch">观察</span>
           <span class="len">71字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDETUD7YJf39sZrLjjFhYqZ261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>前三季度我国邮政行业寄递业务量同比增长3.7%。国家邮政局数据显示，1至9月全国邮政行业寄递业务量累计完成1641.3亿件，同比增长3.7%，中部、西部地区快递业务量占比稳步提升。业务量增长与区域结构变化，反映寄递需求继续扩张、中西部份额上升，对快递网络与区域物流布局形成方向性影响。。文本层。口径为累计业务量与同比增速，新增中西部占比提升的表述。。权力层。国家邮政局发布数据，属行业运行通报，未提具体考核目标。。兑现层。仅有业务量数字，无资金、名单、标准等兑现细节。。商业层。需求端扩张信号，中西部占比提升指向区域物流供给机会。。反方一句。但也可能中西部占比提升只是低基数下的结构性波动，并非持续趋势。。证伪条件。若后续月份中西部快递业务量占比回落，这条判断就是错的。</div>
         <h3>前三季度我国邮政行业寄递业务量同比增长3.7%</h3>
         <p class="brief">国家邮政局数据显示，1至9月全国邮政行业寄递业务量累计完成1641.3亿件，同比增长3.7%，中部、西部地区快递业务量占比稳步提升。业务量增长与区域结构变化，反映寄递需求继续扩张、中西部份额上升，对快递网络与区域物流布局形成方向性影响。</p>
         <details>
@@ -408,8 +461,10 @@
           <span class="badge s-mid">信号 中</span>
           <span class="badge a-watch">观察</span>
           <span class="len">98字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDETUD7YJf39sZrLjjFhYqZ261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>2026年秋招推出第二批就业服务活动。人力资源社会保障部推出2026年全国城市联合招聘高校毕业生秋季专场第二批155场就业服务活动，形式包括线上线下专场（校园）招聘会、跨区域巡回招聘会、直播带岗、政策宣讲和就业指导。活动面向高校毕业生，增加招聘对接与就业服务供给。。文本层。提法从秋季专场延伸到第二批155场，活动形式列举更具体。。权力层。人社部主导，属就业服务部署，与稳就业目标一致。。兑现层。有场次数字155场，但无资金、考核或名单细节。。商业层。增加招聘对接服务供给，普通人可关注参与但商业机会有限。。反方一句。但也可能活动场次多而实际岗位对接效果有限。。证伪条件。若后续公布具体岗位数或签约数据，则判断需修正。</div>
         <h3>2026年秋招推出第二批就业服务活动</h3>
         <p class="brief">人力资源社会保障部推出2026年全国城市联合招聘高校毕业生秋季专场第二批155场就业服务活动，形式包括线上线下专场（校园）招聘会、跨区域巡回招聘会、直播带岗、政策宣讲和就业指导。活动面向高校毕业生，增加招聘对接与就业服务供给。</p>
         <details>
@@ -430,8 +485,10 @@
           <span class="badge s-low">信号 弱</span>
           <span class="badge a-none">无关</span>
           <span class="len">104字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDETUD7YJf39sZrLjjFhYqZ261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>“何以中国·当惊世界殊”网络主题宣传活动举行。10月19日，中央网信办、水利部等部门联合主办的“何以中国·当惊世界殊”网络主题宣传活动在湖北宜昌举行。活动以“大国重器”“长江文明”为主线，展现高峡平湖的奋斗华章、碧水东流的生态画卷、奔流不息的长江文脉。该活动面向网络传播，对宜昌及长江文化、水利工程相关话题形成集中展示。。文本层。多部门联合主办的网络主题宣传，提法聚焦“大国重器”与“长江文明”。。权力层。中央网信办、水利部等部门联合主办，属部级宣传活动，与既有目标无冲突。。兑现层。原文未提及资金、考核、名单或标准。。商业层。与生意基本无关。。反方一句。但也可能带动宜昌当地文旅短期关注度。。证伪条件。若后续公布具体文旅消费数据或产业扶持措施，这条判断就是错的。</div>
         <h3>“何以中国·当惊世界殊”网络主题宣传活动举行</h3>
         <p class="brief">10月19日，中央网信办、水利部等部门联合主办的“何以中国·当惊世界殊”网络主题宣传活动在湖北宜昌举行。活动以“大国重器”“长江文明”为主线，展现高峡平湖的奋斗华章、碧水东流的生态画卷、奔流不息的长江文脉。该活动面向网络传播，对宜昌及长江文化、水利工程相关话题形成集中展示。</p>
         <details>
@@ -452,8 +509,10 @@
           <span class="badge s-low">信号 弱</span>
           <span class="badge a-none">无关</span>
           <span class="len">170字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDEXVsK5we335lO9BHXEEfA261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>俄外长访问伊朗讨论地区局势等问题。19日，俄罗斯外长拉夫罗夫访问伊朗，分别与伊朗外长阿拉格齐和总统佩泽希齐扬会面。伊方表示地区问题没有军事解决方案，须通过外交和政治方案解决，绝不接受武力施压。拉夫罗夫称俄愿协助寻求各方均可接受的方案，且无意放弃与伊朗的经济和投资协议。。文本层。俄外长访伊，伊方强调外交解决、拒武力施压，俄方表态协助并保留经济协议。。权力层。外长级会晤属双边外交，与俄伊既有经济合作目标不冲突。。兑现层。无具体资金、考核、名单或标准，仅口头承诺履行协议。。商业层。与生意基本无关。反方一句。但也可能俄伊经济协议后续落地带来能源与基建合作空间。。证伪条件。若后续公布俄伊具体投资金额或项目清单，这条判断就是错的。</div>
         <h3>俄外长访问伊朗讨论地区局势等问题</h3>
         <p class="brief">19日，俄罗斯外长拉夫罗夫访问伊朗，分别与伊朗外长阿拉格齐和总统佩泽希齐扬会面。伊方表示地区问题没有军事解决方案，须通过外交和政治方案解决，绝不接受武力施压。拉夫罗夫称俄愿协助寻求各方均可接受的方案，且无意放弃与伊朗的经济和投资协议。</p>
         <details>
@@ -474,8 +533,10 @@
           <span class="badge s-mid">信号 中</span>
           <span class="badge a-watch">观察</span>
           <span class="len">163字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDEXVsK5we335lO9BHXEEfA261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>也门胡塞武装称对沙特目标发动多次打击。也门胡塞武装19日称，过去48小时使用导弹和无人机对沙特境内石油、航空设施及军事目标发动6次打击，并袭击也门舍卜沃省一处军事基地内沙特支持的部队集结地。舍卜沃省地方当局称袭击造成53人死亡、200多人受伤。冲突向沙特能源与航空设施延伸，地区安全风险上升。。文本层。胡塞武装以回应沙特袭击为由，将打击范围明确指向沙特石油和航空设施。。权力层。胡塞武装声明与舍卜沃省地方当局声明并存，双方口径在伤亡数字上形成对照。。兑现层。原文只有打击次数和伤亡人数，没有钱、考核、名单或标准。。商业层。与生意基本无关。反方一句。但也可能双方后续降低打击频率，地区风险溢价回落。。证伪条件。若后续无进一步袭击或伤亡数字被修正，这条判断就是错的。</div>
         <h3>也门胡塞武装称对沙特目标发动多次打击</h3>
         <p class="brief">也门胡塞武装19日称，过去48小时使用导弹和无人机对沙特境内石油、航空设施及军事目标发动6次打击，并袭击也门舍卜沃省一处军事基地内沙特支持的部队集结地。舍卜沃省地方当局称袭击造成53人死亡、200多人受伤。冲突向沙特能源与航空设施延伸，地区安全风险上升。</p>
         <details>
@@ -496,8 +557,10 @@
           <span class="badge s-low">信号 弱</span>
           <span class="badge a-none">无关</span>
           <span class="len">222字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDEXVsK5we335lO9BHXEEfA261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>美媒称美未批准向乌转让“爱国者”拦截弹。美国媒体19日报道，美政府未批准向乌克兰转让“爱国者”拦截弹，官员称批准延误正值美乌总统关系紧张。特朗普19日称继续与乌分享情报，指责泽连斯基不想结束战争。泽连斯基称美方限制星链网速、延迟转让拦截弹，意在迫使乌克兰投降。。文本层。美媒披露未批准转让拦截弹，乌方称美以限制星链和延迟军援施压。。权力层。总统层级表态与军援审批脱节，与美既有援乌目标存在冲突。。兑现层。无资金、考核、名单或标准等兑现细节。。商业层。与生意基本无关。反方一句。但也可能只是审批流程延迟，并非政策转向。。证伪条件。若后续美方正式批准转让拦截弹，这条判断就是错的。</div>
         <h3>美媒称美未批准向乌转让“爱国者”拦截弹</h3>
         <p class="brief">美国媒体19日报道，美政府未批准向乌克兰转让“爱国者”拦截弹，官员称批准延误正值美乌总统关系紧张。特朗普19日称继续与乌分享情报，指责泽连斯基不想结束战争。泽连斯基称美方限制星链网速、延迟转让拦截弹，意在迫使乌克兰投降。</p>
         <details>
@@ -518,8 +581,10 @@
           <span class="badge s-mid">信号 中</span>
           <span class="badge a-watch">观察</span>
           <span class="len">173字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDEXVsK5we335lO9BHXEEfA261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>法国政府宣布多地实施宵禁。法国政府19日宣布，巴黎、里昂、里尔、尼斯等多座城市部分地区19日夜间至20日凌晨实施宵禁，巴黎部分地区禁止集会。司法部19日称，上周末抗议活动发生暴力事件以来，警方已逮捕超2500人。总理勒科尔尼表示将启动大规模司法行动追究涉事人员责任。法国多地夜间人员流动与公共活动受限，治安与司法追责同步推进。。文本层。法国政府以宵禁和禁止集会替代常规治安表态，措施落到具体城市与时段。。权力层。政府与司法部并行发声，行政宵禁与司法追责同时推进，未见与既有目标冲突。。兑现层。有逮捕人数超2500人和司法行动提法，但无具体考核、名单或资金安排。。商业层。宵禁直接压缩夜间出行与集会需求，对当地夜间经营是需求收缩，普通人难承接。。反方一句。但也可能宵禁范围限于部分街区且时段短，对整体商业活动影响有限。。证伪条件。若后续未扩大宵禁城市或未公布司法行动具体名单，这条判断就是错的。</div>
         <h3>法国政府宣布多地实施宵禁</h3>
         <p class="brief">法国政府19日宣布，巴黎、里昂、里尔、尼斯等多座城市部分地区19日夜间至20日凌晨实施宵禁，巴黎部分地区禁止集会。司法部19日称，上周末抗议活动发生暴力事件以来，警方已逮捕超2500人。总理勒科尔尼表示将启动大规模司法行动追究涉事人员责任。法国多地夜间人员流动与公共活动受限，治安与司法追责同步推进。</p>
         <details>
@@ -540,8 +605,10 @@
           <span class="badge s-mid">信号 中</span>
           <span class="badge a-watch">观察</span>
           <span class="len">94字</span>
+          <button class="tts-btn" type="button" aria-label="朗读这一条">🔊 朗读</button>
           <a class="src" href="https://tv.cctv.com/2026/10/20/VIDEXVsK5we335lO9BHXEEfA261020.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
+        <div class="tts-text" hidden>西班牙多地遭遇洪灾。受风暴影响，西班牙多地强降雨引发洪水，截至19日已致4人死亡。巴伦西亚和阿利坎特约145个市镇实施居家避险，涉及约90万人。影响集中在两地居民日常出行与商业活动，避险措施下消费与物流短期收缩。。文本层。报道以西班牙媒体统计口径呈现灾情，突出死亡人数与避险市镇、人口规模。。权力层。地方层面实施居家避险，属应急响应，与常态治理目标不冲突。。兑现层。原文未提及资金拨付、考核指标或具体名单标准。。商业层。灾害抑制当地需求与供给，普通人难直接承接商业机会。。反方一句。但也可能避险措施短期化，对商业活动影响有限。。证伪条件。若后续报道显示避险范围迅速缩小且无新增损失，这条判断就是错的。</div>
         <h3>西班牙多地遭遇洪灾</h3>
         <p class="brief">受风暴影响，西班牙多地强降雨引发洪水，截至19日已致4人死亡。巴伦西亚和阿利坎特约145个市镇实施居家避险，涉及约90万人。影响集中在两地居民日常出行与商业活动，避险措施下消费与物流短期收缩。</p>
         <details>
@@ -617,9 +684,84 @@
   
 
   <footer>
-    本页由 T02「新闻联播每日汇总」流水线生成 ｜ 生成时间 2026-10-20 21:17<br>
+    本页由 T02「新闻联播每日汇总」流水线生成 ｜ 生成时间 2026-10-20 21:25<br>
     事实均可回溯至央视网原文；解读为观点，不构成任何投资建议。
   </footer>
 </div>
+<script>
+
+(function () {
+  var synth = window.speechSynthesis;
+  var bar = document.getElementById('tts-bar');
+  if (!synth || typeof SpeechSynthesisUtterance === 'undefined') {
+    if (bar) bar.style.display = 'none';
+    return;
+  }
+  var cards = Array.prototype.slice.call(document.querySelectorAll('article.card'));
+  var queue = [], gen = 0, rate = 1, cur = null;
+  var status = document.getElementById('tts-status');
+  var rateSel = document.getElementById('tts-rate');
+
+  try { var saved = localStorage.getItem('ttsRate'); if (saved) rate = parseFloat(saved) || 1; } catch (e) {}
+  if (rateSel) {
+    rateSel.value = String(rate);
+    rateSel.addEventListener('change', function () {
+      rate = parseFloat(this.value) || 1;
+      try { localStorage.setItem('ttsRate', this.value); } catch (e) {}
+      if (cur) { var t = cur.text, c = cur.card; stop(); start([c]); }
+    });
+  }
+
+  function pickVoice() {
+    var vs = synth.getVoices() || [];
+    for (var i = 0; i < vs.length; i++) if (/^zh[-_]?CN/i.test(vs[i].lang)) return vs[i];
+    for (var j = 0; j < vs.length; j++) if (/^zh/i.test(vs[j].lang)) return vs[j];
+    return null;
+  }
+  function highlight(el) {
+    cards.forEach(function (c) { c.classList.remove('speaking'); });
+    if (el) { el.classList.add('speaking'); try { el.scrollIntoView({block: 'center', behavior: 'smooth'}); } catch (e) {} }
+  }
+  function finish() { highlight(null); if (status) status.textContent = ''; cur = null; }
+
+  function playFrom(i, my, list) {
+    if (my !== gen || i >= list.length) { if (my === gen) finish(); return; }
+    var card = list[i];
+    highlight(card);
+    if (status) status.textContent = '朗读中 ' + (i + 1) + '/' + list.length;
+    var node = card.querySelector('.tts-text');
+    if (!node) { playFrom(i + 1, my, list); return; }
+
+    var u = new SpeechSynthesisUtterance(node.textContent);
+    u.lang = 'zh-CN'; u.rate = rate; u.pitch = 1;
+    var v = pickVoice(); if (v) u.voice = v;
+    cur = { card: card, text: node.textContent };
+    u.onend = function () { if (my === gen) playFrom(i + 1, my, list); };
+    u.onerror = function () { if (my === gen) playFrom(i + 1, my, list); };
+    synth.speak(u);
+  }
+  function stop() { gen++; queue = []; try { synth.cancel(); } catch (e) {} finish(); }
+  function start(list) { gen++; var my = gen; queue = list; playFrom(0, my, list); }
+
+  var allBtn = document.getElementById('tts-all');
+  if (allBtn) allBtn.addEventListener('click', function () {
+    stop();
+    if (!cards.length) { if (status) status.textContent = '没有可朗读的内容'; return; }
+    start(cards);
+  });
+  var stopBtn = document.getElementById('tts-stop');
+  if (stopBtn) stopBtn.addEventListener('click', stop);
+
+  cards.forEach(function (card) {
+    var btn = card.querySelector('.tts-btn');
+    if (!btn) return;
+    btn.addEventListener('click', function () { stop(); start([card]); });
+  });
+
+  if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = function () {};
+  window.addEventListener('beforeunload', function () { try { synth.cancel(); } catch (e) {} });
+})();
+
+</script>
 </body>
 </html>
