@@ -59,32 +59,173 @@
            padding:1px 6px; border-radius:4px; flex:none; }
   ul.rest .t { flex:1; color:var(--mid); }
   ul.rest .len { flex:none; color:var(--dim); font-size:12px; }
+  /* ---- 资金面 ---- */
+  .caliber { font-size:11px; font-weight:400; letter-spacing:0; color:var(--dim);
+              border:1px solid var(--line); border-radius:99px; padding:1px 8px; margin-left:8px; }
+  .flow { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:720px) { .grid2 { grid-template-columns:1fr; } }
+  .flow .stat b { font-size:19px; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:12px;
+            padding:14px 16px; margin-bottom:12px; }
+  .panel h4 { margin:0 0 8px; font-size:13px; color:var(--dim); font-weight:600; }
+  table.flow-t { width:100%; border-collapse:collapse; font-size:13px; }
+  table.flow-t th { text-align:right; color:var(--dim); font-weight:500; padding:4px 6px; font-size:12px; }
+  table.flow-t th:first-child, table.flow-t td:first-child { text-align:left; }
+  table.flow-t td { padding:5px 6px; text-align:right; color:var(--mid);
+                     border-top:1px solid var(--line); font-variant-numeric:tabular-nums; }
+  .up { color:#ef4444; } .down { color:#22c55e; }
+  table.flow-t td.up { color:#ef4444; } table.flow-t td.down { color:#22c55e; }
+  table.flow-t { table-layout:fixed; }
+  table.flow-t th:nth-child(1), table.flow-t td:nth-child(1) { width:52%; }
+  .sector h3 { display:flex; align-items:center; gap:10px; }
+  .stocks { width:100%; border-collapse:collapse; font-size:13px; margin-top:6px; }
+  .stocks th { text-align:left; color:var(--dim); font-weight:500; font-size:12px;
+                padding:6px 6px; border-bottom:1px solid var(--line); }
+  .stocks td { padding:7px 6px; border-bottom:1px solid var(--line); color:var(--mid);
+                font-variant-numeric:tabular-nums; }
+  .stocks tr:last-child td { border-bottom:none; }
+  .dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:5px; }
+  .d-green { background:#22c55e; } .d-amber { background:#f59e0b; } .d-red { background:#ef4444; }
+  .links a { color:var(--dim); text-decoration:none; margin-right:8px; font-size:12px; }
+  .links a:hover { color:var(--accent); }
   footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--line);
             color:var(--dim); font-size:12px; line-height:1.9; }
-  @media (max-width:600px) { .stats { grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:600px) { .stats { grid-template-columns:repeat(2,1fr); } .flow { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <h1>新闻联播 · 每日汇总</h1>
-    <div class="sub">2026-10-18 ｜ 预览版 ｜ 数据源：央视网《新闻联播》</div>
+    <div class="sub">2026-10-18 ｜ 数据源：央视网《新闻联播》 ｜
+      <a href="index.html" style="color:var(--accent);text-decoration:none">往期归档 →</a></div>
   </header>
 
   <div class="notice">
-    预览说明：条目与正文为真实抓取；<b>标注「四层解读」的 4 条为人工示例</b>，用于确认版式与信息密度。
-    正式版将按「轻重缓急」重排（P0–P3），并由模型按同一字段生成简报与解读，经七道闸门校验后发布。
+    条目与正文为真实抓取；解读由模型生成，逐条通过 G1/G2/G3/G5 闸门，未通过者不出现在页面。排序尚未接入，当前按播出顺序排列。
   </div>
 
-  <div class="stats">
+  <div class="stats" style="">
     <div class="stat"><b>28</b><span>处理单元</span></div>
     <div class="stat"><b>12</b><span>独立新闻</span></div>
     <div class="stat"><b>16</b><span>快讯子条</span></div>
     <div class="stat"><b>7,462</b><span>正文总字数</span></div>
   </div>
 
-  <h2>示例解读</h2>
   
+
+  <h2>今日解读</h2>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#01</span>
+          <span class="badge s-high">信号 强</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">1247字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEobgGolEpvCNBKbF6XWMt261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>【新思想引领新征程】绘就幸福“夕阳红” 持续增进民生福祉</h3>
+        <p class="brief">截至2025年底，我国60岁及以上老年人超过3.2亿人，养老机构和设施达39.6万个，护理型床位占比67.5%，县级公办养老机构基本实现全覆盖。北京已建成街道区域养老服务中心168家、社区养老服务驿站1500多个、老年助餐点近3000个。养老服务网络向城乡基层延伸，银发经济供给品类增加。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>提法从“老有所养”扩展到“老有所乐、老有所为”，并首次明确2029年三级网络建成、2035年体系成熟定型的时间表。</p></div>
+            <div class="layer"><b>权力</b><p>中央规划与部委指引配套，层级从总书记要求落到《城乡三级养老服务网络建设管理指引》，与既有普惠养老目标一致。</p></div>
+            <div class="layer"><b>兑现</b><p>有硬指标：2029年基本建成县—乡镇—村三级网络，护理型床位占比67.5%，县级公办养老机构全覆盖。</p></div>
+            <div class="layer"><b>商业</b><p>供给端扩设施、需求端促银发消费，普通人可切入社区助餐、居家照护、适老化产品等本地服务，但需对接医保长护险和社区网络。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能地方财力与农村短板制约三级网络落地速度，普惠服务扩张未必同步带来可盈利的民间空间。</p>
+          <p class="falsify"><b>证伪条件</b>若2029年前三级养老服务网络建设进度明显滞后于指引要求，或护理型床位占比不升反降，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#02</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">590字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEqOabIYpmZRQUNaDubH13261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>李强同乌兹别克斯坦总理会谈</h3>
+        <p class="brief">10月17日，李强在塔什干同乌兹别克斯坦总理阿里波夫会谈，双方见证签署经贸、教育、海关、卫生、减贫等领域多项合作文件，访问期间还签署电商、气候、媒体等领域文件。明年两国迎来建交35周年。合作方向涉及能源资源、人工智能、现代农业、基础设施、金融及中吉乌铁路等，对相关领域企业意味着项目与贸易对接窗口。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>会谈叠加多项文件签署，合作领域从传统经贸扩至人工智能、电商、气候等新提法。</p></div>
+            <div class="layer"><b>权力</b><p>总理级会谈配多部门文件，与既有“一带一路”及上合框架目标一致，无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>签署文件覆盖经贸、海关、金融、减贫等，但原文未列金额、考核指标或企业名单。</p></div>
+            <div class="layer"><b>商业</b><p>以需求和项目对接为主，能源、农业、物流、电商领域企业可跟进，普通人直接接入门槛高。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能多项文件仍属框架性安排，落地节奏取决于后续具体项目清单。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无具体项目金额或企业名单公布，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#03</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">301字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEIswMFtT0ODGVWFJ2DDVb261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>李强会见乌兹别克斯坦总统</h3>
+        <p class="brief">当地时间10月17日，国务院总理李强在塔什干会见乌兹别克斯坦总统米尔济约耶夫。李强表示拓展经贸、能源、互联互通等领域合作，加强中国—中亚机制、上合等多边平台协作。乌方恪守一个中国原则，愿推动乌中新时代全天候全面战略伙伴关系发展。双方表态指向多边协作与双边合作方向。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>提法延续中乌命运共同体与新时代全天候全面战略伙伴关系，新增中国—中亚机制、上合平台协作表述。</p></div>
+            <div class="layer"><b>权力</b><p>总理会见总统，属高层外交文种，与既有周边外交目标一致，无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>原文无资金、考核、名单或标准等兑现细节，仅方向性表态。</p></div>
+            <div class="layer"><b>商业</b><p>经贸、能源、互联互通属需求侧方向，普通人暂无具体可接入口。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能后续无具体项目落地，合作停留在表态层面。</p>
+          <p class="falsify"><b>证伪条件</b>若后续公布具体经贸能源项目清单或资金安排，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#04</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">476字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDE8LNLYwylrdsIYbWq9HfK261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>李强赴杜尚别对塔吉克斯坦进行正式访问并出席上海合作组织成员国政府首脑（总理）理事会第二十五次会议</h3>
+        <p class="brief">18日，李强应塔吉克斯坦总理拉苏尔佐达邀请抵达杜尚别，开始正式访问，并将出席上合组织成员国政府首脑（总理）理事会第二十五次会议。塔方举行欢迎仪式。此访延续今年5月两国元首会晤蓝图，推动中塔合作及上合比什凯克峰会成果落实。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>延续5月元首会晤提法，强调落实比什凯克峰会成果。</p></div>
+            <div class="layer"><b>权力</b><p>总理层级正式访问并出席多边会议，与既有合作目标一致。</p></div>
+            <div class="layer"><b>兑现</b><p>原文未提资金、考核、名单或标准。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关，普通人不直接可接。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能后续总理会议公布具体合作项目。</p>
+          <p class="falsify"><b>证伪条件</b>若总理会议未提及落实比什凯克峰会成果，则判断有误。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#05</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">519字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDERaoJOMVwYJvxLYiv0JpK261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>【赓续长征精神 奋进复兴征程】甘肃：长征足迹印沃土 红色陇原谱新篇</h3>
+        <p class="brief">甘肃依托长征红色资源，会宁会师旧址沿线建成约11公里红色研学线路，今年以来会宁接待游客超800万人次、同比增长9%。引洮工程稳定供水，滋润沿线近600万群众。影响在于红色文旅与水利民生同步推进，为陇中旱塬带来人流与用水保障。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>口径上把长征精神与引洮供水、红色研学、产业集群并列，突出红色资源转化。</p></div>
+            <div class="layer"><b>权力</b><p>省级层面部署长征国家文化公园建设保护，与“十五五”产业目标同向。</p></div>
+            <div class="layer"><b>兑现</b><p>有游客量800万人次、增长9%的量化口径，引洮工程已稳定供水，但资金与考核细节未列。</p></div>
+            <div class="layer"><b>商业</b><p>红色研学带来文旅需求，水利工程改善供给，普通人可接研学服务与沿线配套。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能游客增长集中于会宁单点，对周边商户的带动有限。</p>
+          <p class="falsify"><b>证伪条件</b>若会宁游客量增速回落或研学线路未形成持续客流，这条判断就是错的。</p>
+        </details>
+      </article>
       <article class="card">
         <div class="meta">
           <span class="no">#06</span>
@@ -94,61 +235,105 @@
           <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEqH8f98aqHshZVFJxXebZ261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
         <h3>我国已开通104项全国性跨地区社保服务</h3>
-        <p class="brief">国家社保平台已开通104项跨地区服务，累计服务113.53亿人次；养老保险转移由至少两周压缩至最快当天，全国社保业务线上办理量超80%。</p>
+        <p class="brief">国家社保公共服务平台已开通104项全国性、跨地区服务，累计服务113.53亿人次，全国社保业务线上办理量超过80%。秦皇岛完成与全国所有省份社保系统对接，养老保险转移业务5个工作日内办结，最快当天完成。京津冀今年新增9项通办事项，总数达42项。社保跨省通办压缩了跑腿和等待时间，企业代办环节增多。</p>
         <details open>
           <summary>四层解读</summary>
           <div class="layers">
-            <div class="layer"><b>文本</b><p>用「累计服务113.53亿人次」定调，属成果型播报，无新提法。</p></div>
-            <div class="layer"><b>权力</b><p>人社部口径，非新政策，约束力中等；重点看是否进入下一轮扩容。</p></div>
-            <div class="layer"><b>兑现</b><p>已有载体（国家社保平台）与地方试点（秦皇岛、青岛），属「已落地」而非「将落地」。</p></div>
-            <div class="layer"><b>商业</b><p>需求侧。政务系统对接、代办服务、HR 系统有存量替换机会；但走政府采购，门槛在资质与地方关系。</p></div>
+            <div class="layer"><b>文本</b><p>提法从单项业务办理转为104项全国性跨地区服务打包，并给出线上办理量超80%的口径。</p></div>
+            <div class="layer"><b>权力</b><p>人社部层面发布，属公共服务通报，与既有社保跨省通办目标一致，无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>有104项服务清单和113.53亿人次累计量，但无资金安排、考核名单或新标准。</p></div>
+            <div class="layer"><b>商业</b><p>需求侧便民服务，企业人力系统对接社保经办系统带来代办接口，普通人难直接承接。</p></div>
           </div>
-          <p class="against"><b>反方一句</b>也可能只是年度成果通报，没有增量。</p>
-          <p class="falsify"><b>证伪条件</b>若三个月内没有新的跨省通办事项扩容，说明这轮是收尾而非加速。</p>
+          <p class="against"><b>反方一句</b>但也可能线上办理量超80%只反映查询类低频业务，转移接续等核心业务仍依赖后台清算。</p>
+          <p class="falsify"><b>证伪条件</b>若后续没有企业端系统对接的接口开放或收费安排，这条判断就是错的。</p>
         </details>
       </article>
       <article class="card">
         <div class="meta">
           <span class="no">#07</span>
-          <span class="badge s-high">信号 中偏强</span>
+          <span class="badge s-mid">信号 中</span>
           <span class="badge a-watch">观察</span>
           <span class="len">300字</span>
           <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEpkl3MRi7hWxQORndBrsU261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
         <h3>城镇供热“温暖工程”三年行动启动</h3>
-        <p class="brief">住建部等六部门印发城镇供热「温暖工程」三年行动方案，2028年底前老旧管网改造取得明显进展；运行满20年或存在隐患的管网、热力站纳入改造，并推动热电机组改造升级。</p>
+        <p class="brief">住房城乡建设部、国家发展改革委等六部门联合印发城镇供热“温暖工程”三年行动方案，明确到2028年底前存量供热老化管网更新改造取得明显进展。运行年限满20年或存在突出风险隐患的供热管网、热力站纳入改造计划，鼓励对供热面积大于5万平方米的热力站优化改造，并推动热电机组建设投产和改造升级。</p>
         <details>
           <summary>四层解读</summary>
           <div class="layers">
-            <div class="layer"><b>文本</b><p>「三年行动」加「2028年底前」，是任务型表述，给了硬时间节点。</p></div>
-            <div class="layer"><b>权力</b><p>六部门联合印发「方案」，约束力中等偏上，但非条例，执行弹性大。</p></div>
-            <div class="layer"><b>兑现</b><p>有清单、有判定标准（满20年/有隐患），但未公布投资规模——这是缺口，需等地方配套。</p></div>
-            <div class="layer"><b>商业</b><p>工程订单为主：管材、保温、阀门、施工、检测评估。普通人可切检测与运维，不宜碰施工总包。</p></div>
+            <div class="layer"><b>文本</b><p>六部门联合印发三年行动方案，首次以“温暖工程”名义设定2028年底时间节点。</p></div>
+            <div class="layer"><b>权力</b><p>六部门联合发文，层级较高，与既有供热改造方向一致，未见目标冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>有年限满20年、5万平方米等改造口径，但无资金安排、考核名单和补贴标准。</p></div>
+            <div class="layer"><b>商业</b><p>指向供热管网与热力站更新需求，普通人可关注施工、设备配套，门槛较高。</p></div>
           </div>
-          <p class="against"><b>反方一句</b>但也可能因地方财政紧张而延期，三年行动不等于三年完成。</p>
-          <p class="falsify"><b>证伪条件</b>若半年内没有省份发布配套资金方案，说明地方没钱，进度必然拖。</p>
+          <p class="against"><b>反方一句</b>但也可能改造资金依赖地方财政，落地节奏慢于方案表述。</p>
+          <p class="falsify"><b>证伪条件</b>若后续出台具体资金安排和年度改造名单，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#08</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">407字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEEL8bY5GJ22acoLR8Fl48261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>全国铁路列车车次编排改革启动</h3>
+        <p class="brief">新版《列车车次编排规定》发布，动车组旅客列车字头由4个增至7个，可编排车次数量增长近40%，新增X字头用于最高运行时速350公里以上的复兴号动车组。车次变更在11月下旬、12月下旬分2批进行，12306在15天预售期内展示新车次。影响指向铁路调度与票务信息系统，旅客购票口径随之调整。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>车次字头口径由4个扩至7个，新增X字头，G、T、K等字头与速度等级重新对应。</p></div>
+            <div class="layer"><b>权力</b><p>以新版《列车车次编排规定》这一规章形式发布，属全国铁路系统统一调整，与路网扩容方向一致。</p></div>
+            <div class="layer"><b>兑现</b><p>有明确时间表：11月下旬、12月下旬分2批变更，12306按15天预售期展示，95306同步更新。</p></div>
+            <div class="layer"><b>商业</b><p>属供给侧的调度与信息系统调整，普通人只能被动适应新车次，直接生意接口有限。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能车次字头扩容只是编号资源腾挪，实际开行列车数量与速度等级并未同步变化。</p>
+          <p class="falsify"><b>证伪条件</b>若11月下旬首批变更后12306展示的新车次与旧车次一一对应、开行数量无变化，这条判断就是错的。</p>
         </details>
       </article>
       <article class="card">
         <div class="meta">
           <span class="no">#09</span>
-          <span class="badge s-low">信号 弱</span>
-          <span class="badge a-none">无关</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
           <span class="len">463字</span>
           <a class="src" href="https://tv.cctv.com/2026/10/18/VIDERB708P4Ib32okBxUll0U261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
         <h3>我国首次太空培育两代水稻取得新突破</h3>
-        <p class="brief">神舟二十三号乘组在轨超4个月，完成新一批水稻样品采集，首次实现太空连续繁育两代；样品将随返回舱下行，用于解析微重力对遗传稳定性的影响。</p>
+        <p class="brief">神舟二十三号乘组在轨超4个月，在问天实验舱完成新一批水稻样品采集与存储，并播种部分“太空种子”。实验设4个单元、每单元6粒，分有性繁殖与营养繁殖各两组，比较空间适应性差异。样品将随返回舱下行，由科学家做表型与分子分析。影响在于为地外粮食原位生产积累数据。</p>
         <details>
           <summary>四层解读</summary>
           <div class="layers">
-            <div class="layer"><b>文本</b><p>关键词是「首次」，属突破型表述，但用词克制，未称「重大突破」。</p></div>
-            <div class="layer"><b>权力</b><p>航天与科研体系，属科研进展通报，不是产业政策。</p></div>
-            <div class="layer"><b>兑现</b><p>无预算、无考核、无名单，短期不产生订单；兑现等「地外粮食原位生产」，时间尺度十年以上。</p></div>
-            <div class="layer"><b>商业</b><p>与 A 股关联弱，属主题炒作型（种业、航天），不应作为政策信号使用。</p></div>
+            <div class="layer"><b>文本</b><p>首次提出“太空培育两代水稻”，把空间水稻实验从单代延伸到多代遗传稳定性。</p></div>
+            <div class="layer"><b>权力</b><p>由航天员乘组与空间站实验项目推进，属科研任务口径，与既有空间生命科学目标一致。</p></div>
+            <div class="layer"><b>兑现</b><p>有明确实验设计：4个单元、每单元6粒、分两组繁殖模式，但无资金与考核细节。</p></div>
+            <div class="layer"><b>商业</b><p>属科研供给端进展，普通人暂无可承接的生意入口。</p></div>
           </div>
-          <p class="against"><b>反方一句</b>不过太空育种商业化已有先例，不排除地方借势做产业园。</p>
-          <p class="falsify"><b>证伪条件</b>若一年内没有航天育种相关的地方产业规划出台，就只是科研新闻。</p>
+          <p class="against"><b>反方一句</b>但也可能两代培育仅完成样品采集，遗传稳定性结论尚未得出。</p>
+          <p class="falsify"><b>证伪条件</b>若后续样品分析未显示多代繁殖差异，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#10</span>
+          <span class="badge s-noise">信号 噪音</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">264字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEwxUNrXyJaoItVt6SMgXu261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>第五届亚残运会今天开幕</h3>
+        <p class="brief">第五届亚洲残疾人运动会10月18日在日本开幕，中国体育代表团派出312名运动员，参与17个大项、335个小项角逐。赛事共设18个大项、502个小项，亚洲45个国家和地区3000多名运动员参赛。中国代表团将在举重、自行车、游泳等项目冲击首金。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>文本层：以赛事开幕和代表团参赛规模为报道口径，突出中国运动员人数和项目覆盖。</p></div>
+            <div class="layer"><b>权力</b><p>权力层：体育赛事报道，无文种和层级变化，与既有目标无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>兑现层：无资金、考核、名单或标准等硬性内容。</p></div>
+            <div class="layer"><b>商业</b><p>商业层：与生意基本无关。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能带动残疾人体育相关消费和关注度。</p>
+          <p class="falsify"><b>证伪条件</b>若后续出现明确的商业赞助或产业政策，这条判断就是错的。</p>
         </details>
       </article>
       <article class="card">
@@ -160,169 +345,400 @@
           <a class="src" href="https://tv.cctv.com/2026/10/18/VIDE98EStlKIUv9k8SKTSDb0261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
         </div>
         <h3>今年1.3万亿元超长期特别国债发行完毕</h3>
-        <p class="brief">今年1.3万亿元超长期特别国债发行完毕，资金投向「两重」建设、「两新」工作，并设立财政金融协同促内需专项资金；已连续三年发行。</p>
+        <p class="brief">今年我国1.3万亿元超长期特别国债日前发行完毕，资金主要用于支持“两重”建设和“两新”工作，以及设立财政金融协同促内需专项资金。我国已连续三年发行超长期特别国债。这笔资金投向“两重”“两新”及促内需专项，对相关项目形成资金支持，方向是扩大内需。</p>
         <details>
           <summary>四层解读</summary>
           <div class="layers">
-            <div class="layer"><b>文本</b><p>「发行完毕」是完成态，意味着钱已到位，进入拨付与使用阶段——这是本条最有价值的信息。</p></div>
-            <div class="layer"><b>权力</b><p>财政部既定政策的执行进度，不是新政；层级高，但方向早已公开。</p></div>
-            <div class="layer"><b>兑现</b><p>钱已到账。下一阶段信号是「拨付进度」与「项目开工率」，而不是发行额。</p></div>
-            <div class="layer"><b>商业</b><p>需求侧最强的一条：两重、两新直接对应设备与工程订单。等开工数据，别等新闻。</p></div>
+            <div class="layer"><b>文本</b><p>延续连续三年发行超长期特别国债的提法，强调更加积极的财政政策持续精准发力。</p></div>
+            <div class="layer"><b>权力</b><p>国债资金安排属中央财政层级，与促内需方向一致，未提冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>明确1.3万亿元发行完毕，资金用途列明“两重”“两新”及促内需专项资金，无具体项目名单。</p></div>
+            <div class="layer"><b>商业</b><p>属财政供给端资金投放，普通人直接承接难，需通过“两新”等具体项目间接参与。</p></div>
           </div>
-          <p class="against"><b>反方一句</b>但也可能「发完即高峰」，四季度实物工作量不及预期。</p>
-          <p class="falsify"><b>证伪条件</b>若四季度基建投资增速没有回升，说明资金滞留在账上。</p>
+          <p class="against"><b>反方一句</b>但也可能资金落地节奏和项目筛选标准未明，实际拉动效果待观察。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无“两重”“两新”具体项目清单或资金拨付细则，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#12</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">110字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDE98EStlKIUv9k8SKTSDb0261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>第四届“良渚论坛”在浙江杭州开幕</h3>
+        <p class="brief">第四届“良渚论坛”10月18日在浙江杭州开幕，主题为“文明承启：守护文化遗产 点亮时代之光”，来自近60个国家和地区的中外嘉宾围绕早期文明、城址考古、大遗址保护利用等议题开展研讨。论坛聚焦文化遗产保护与文明交流互鉴，对文博、考古、文旅相关领域形成方向性关注。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>论坛届次从第三届升至第四届，主题新增“文明承启”提法，议题明确列出早期文明、城址考古、大遗址保护利用。</p></div>
+            <div class="layer"><b>权力</b><p>主办方未在原文披露，属论坛性活动，与既有文化遗产保护方向一致，无冲突信息。</p></div>
+            <div class="layer"><b>兑现</b><p>原文未出现资金、考核、名单或标准等兑现性内容。</p></div>
+            <div class="layer"><b>商业</b><p>属文化遗产保护与交流的供给端信号，普通人难以直接承接具体商业机会。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能论坛仅停留在研讨层面，缺乏后续落地项目与资金安排。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无任何大遗址保护利用或文博合作的具体项目、资金、名单公布，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#13</span>
+          <span class="badge s-high">信号 强</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">108字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDE98EStlKIUv9k8SKTSDb0261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>前三季度深圳对APEC经济体进出口同比增长40%</h3>
+        <p class="brief">深圳海关统计显示，前三季度深圳对APEC经济体进出口3.23万亿元，同比增长40%，创历史同期新高，居全国内地城市首位，占全国同期对APEC经济体进出口总值的13.4%。主要产品包括集成电路、电脑及其零部件。深圳外贸规模与增速同步走高，相关电子制造与跨境供应链环节的订单密度随之上升。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>以海关统计口径发布城市级外贸数据，突出“历史同期新高”与“全国首位”的位次表述。</p></div>
+            <div class="layer"><b>权力</b><p>主体为深圳海关，属地方口岸数据发布，与外贸稳增长方向一致，未见冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>仅有进出口总值与占比数字，无资金安排、考核名单或行业标准落地。</p></div>
+            <div class="layer"><b>商业</b><p>需求端来自APEC经济体的采购，供给端集中在集成电路与电脑零部件，普通人可承接的是配套加工与物流环节。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能该增速主要由少数电子品类集中拉动，覆盖面有限。</p>
+          <p class="falsify"><b>证伪条件</b>若后续公布的四季度或全年数据中深圳对APEC进出口增速明显回落，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#14</span>
+          <span class="badge s-high">信号 强</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">72字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDE98EStlKIUv9k8SKTSDb0261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>中国农业发展银行2000亿元信贷资金专项用于秋粮收购</h3>
+        <p class="brief">中国农业发展银行提前安排2000亿元信贷资金，专项用于秋粮收购，统筹支持政策性收储和市场化收购。此举为秋粮收购提供资金保障，影响种粮农户和粮食收购企业的售粮与收储节奏。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>提法上明确“专项用于秋粮收购”，强调统筹政策性与市场化收购。</p></div>
+            <div class="layer"><b>权力</b><p>农发行以信贷安排落实秋粮收购资金，与既有收购目标一致。</p></div>
+            <div class="layer"><b>兑现</b><p>兑现层有2000亿元信贷资金，但未列具体考核、名单或标准。</p></div>
+            <div class="layer"><b>商业</b><p>商业层属供给端资金支持，普通人可通过粮食收购环节间接接触。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能信贷资金投放节奏与收购实际需求不匹配，影响效果。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无实际贷款投放或秋粮收购资金仍出现缺口，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#15</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">78字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDE98EStlKIUv9k8SKTSDb0261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>市场监管总局发布15项氢能国家标准</h3>
+        <p class="brief">市场监管总局近日发布一批氢能领域国家标准，覆盖制氢、储运、加氢站及氢气安全检测等全链条。该标准体系将提升氢能装备制造水平，提高产业准入门槛，对氢能产业链相关企业形成技术规范约束。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>首次以全链条国家标准形式明确氢能制储运加及安全检测的规范口径。</p></div>
+            <div class="layer"><b>权力</b><p>市场监管总局发布国家标准，属行业管理层面，与既有氢能产业支持方向一致。</p></div>
+            <div class="layer"><b>兑现</b><p>标准已发布，但原文未提及配套资金、考核或企业名单。</p></div>
+            <div class="layer"><b>商业</b><p>供给端标准约束增强，普通个人创业者直接切入门槛较高。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能标准落地执行节奏偏慢，短期内对产业实际约束有限。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无配套监管或企业未按标准调整生产，则标准对产业门槛的提升作用不成立。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#16</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">103字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDE98EStlKIUv9k8SKTSDb0261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>前三季度全国铁路发送旅客37.1亿人次</h3>
+        <p class="brief">国铁集团披露，前三季度全国铁路发送旅客37.1亿人次，同比增长4.8%，创历史同期新高；开行旅游列车2860列，同比增长25.5%。客运量增长带动旅游观光、生态康养、红色研学等出行需求，文旅产业获得铁路运力支撑。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>以国铁集团口径发布前三季度客运量，突出创历史同期新高与旅游列车增速。</p></div>
+            <div class="layer"><b>权力</b><p>国铁集团企业层面披露运营数据，与客运上量、文旅消费方向一致，无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>仅有客运量与旅游列车列数，未见资金、考核指标或具体项目名单。</p></div>
+            <div class="layer"><b>商业</b><p>需求端出行与文旅客流扩张，普通人可关注沿线旅游服务，但无直接供给入口。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能旅游列车增量主要来自既有线路调度调整，对地方文旅收入拉动有限。</p>
+          <p class="falsify"><b>证伪条件</b>若后续披露旅游列车客座率或沿线消费数据未见同步增长，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#17</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">112字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDE98EStlKIUv9k8SKTSDb0261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>我国确定“十五五”适宜增殖放流水生物种345种</h3>
+        <p class="brief">农业农村部确定“十五五”时期适宜增殖放流的水生物种345种，比“十四五”增加59种。到2030年，区域性和珍贵濒危物种放流数量占淡水物种放流数量的比例提升至15%。放流结构向区域性和珍贵濒危物种倾斜，苗种供应与放流环节的品种要求随之变化。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>“十五五”放流物种口径由“十四五”扩至345种，新增59种，并首次给出2030年15%的结构比例。</p></div>
+            <div class="layer"><b>权力</b><p>农业农村部发布，属部门层面规划信息，与既有增殖放流方向一致，未见目标冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>有物种名单和2030年比例指标，未见资金安排、考核办法或具体放流标准。</p></div>
+            <div class="layer"><b>商业</b><p>指向放流苗种供给端，品种与结构要求变化，普通人可关注苗种繁育环节，但缺细节难接。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能只是规划口径调整，无资金与考核落地，对苗种实际需求影响有限。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无配套资金、考核或放流标准出台，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#18</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">106字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDE98EStlKIUv9k8SKTSDb0261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>中韩海上执法部门圆满完成联合巡航</h3>
+        <p class="brief">中韩海上执法机构在中韩渔业协定暂定措施水域完成联合执法巡航，历时10天，累计巡航超1200海里，对两国作业渔船观察记录和登临检查，系时隔4年再次开展。影响指向两国渔业作业秩序与海上执法协作恢复。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>提法从“时隔4年”恢复联合巡航，强调暂定措施水域的联合执法。</p></div>
+            <div class="layer"><b>权力</b><p>部门级海上执法协作，与既有渔业协定框架一致，无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>原文无钱、考核、名单、标准等兑现细节。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能仅属例行执法协作恢复，不改变渔业作业实际格局。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无常态化联巡安排或渔业管理细则变化，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#19</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">102字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDE98EStlKIUv9k8SKTSDb0261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>第二十五届中国上海国际艺术节开幕</h3>
+        <p class="brief">第二十五届中国上海国际艺术节10月17日晚开幕，期间举办近400项1100场各类演出和展览。同日上海大歌剧院启幕、上海演艺集团成立。演出供给集中释放，上海本地演艺与展览相关经营主体迎来密集档期。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>提法上把艺术节开幕与上海大歌剧院启幕、上海演艺集团成立并列为标志性节点。</p></div>
+            <div class="layer"><b>权力</b><p>上海层面文化活动口径，与建设社会主义国际文化大都市的既有方向一致。</p></div>
+            <div class="layer"><b>兑现</b><p>只有场次数量，未见资金、考核名单或准入标准。</p></div>
+            <div class="layer"><b>商业</b><p>属文化演出供给放量，普通人可承接票务、场务、周边等配套生意。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能1100场集中在既有院团和场馆体系内，外部小经营者难分到份额。</p>
+          <p class="falsify"><b>证伪条件</b>若后续公布演出排期与场馆名单中缺少社会主体参与，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#20</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">155字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDE98EStlKIUv9k8SKTSDb0261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>2026长三角国际青年电影周开幕</h3>
+        <p class="brief">2026长三角国际青年电影周10月17日在浙江宁波开幕，举办青影创投计划、论坛、影展等活动并授予“之江荣誉”。青影创投计划已收545个申报项目，将评20个优秀项目给予产业支持，结果23日晚闭幕式发布。影响指向青年电影人及产业资源对接。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>以“长三角国际青年电影周”新提法落地宁波，配套创投与荣誉体系。</p></div>
+            <div class="layer"><b>权力</b><p>地方节展活动，层级为区域，与青年电影扶持方向不冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>有545个申报、20个优秀项目产业支持、23日发布名单，缺资金数额。</p></div>
+            <div class="layer"><b>商业</b><p>供给端扶持青年电影项目，普通人可关注创投申报与影展参与。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能20个项目的产业支持仅停留在荣誉与对接，无实质资金。</p>
+          <p class="falsify"><b>证伪条件</b>若闭幕式公布20个项目附带明确资金额度与落地合同，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#21</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">70字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDE98EStlKIUv9k8SKTSDb0261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>2026国际武当太极文化节开幕</h3>
+        <p class="brief">2026国际武当太极文化节10月17日晚在湖北十堰开幕，全球100多个国家和地区的武术爱好者齐聚武当。活动以太极文化为纽带，吸引国际参与，对十堰本地文旅消费形成短期带动。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>提法上突出“国际”与“太极文化”，定位为全球性文化交流活动。</p></div>
+            <div class="layer"><b>权力</b><p>由地方主办的文化节庆，层级为市级，与文旅融合方向一致。</p></div>
+            <div class="layer"><b>兑现</b><p>原文未提及资金投入、考核指标、参与名单或标准。</p></div>
+            <div class="layer"><b>商业</b><p>属于文旅供给端活动，普通人可关注本地餐饮住宿等配套需求。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能国际参与者规模有限，对本地消费拉动不明显。</p>
+          <p class="falsify"><b>证伪条件</b>若后续公布的活动参与人数或消费数据显著低于预期，则判断有误。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#22</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">381字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEVrjLCYKuuFpRGUx4f8ko261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>也门胡塞武装称击落沙特武装直升机 沙特主导联军称拦截多架无人机</h3>
+        <p class="brief">胡塞武装称，过去24小时沙特战机对萨那等地发动53次空袭，塔伊兹省9人死亡，并称击落一架沙特武装直升机。沙特主导联军称该AH-6i直升机因技术故障坠毁、2人死亡，17日摧毁萨达省两处弹道导弹发射平台，在利雅得等地拦截摧毁4架无人机。埃及议会18日紧急会议审议是否授权向沙特提供防御支持。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>双方对同一坠机事件各执一词：胡塞称击落，联军称技术故障。</p></div>
+            <div class="layer"><b>权力</b><p>表态主体为武装组织、联军发言人与埃及议会，均无最终决定权。</p></div>
+            <div class="layer"><b>兑现</b><p>仅有空袭次数、死亡人数与拦截架数，无资金、名单或标准。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能埃及议会授权后改变地区防御供给格局。</p>
+          <p class="falsify"><b>证伪条件</b>若埃及议会作出授权并实际派兵，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#23</span>
+          <span class="badge s-noise">信号 噪音</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">123字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEweORQIJJp3bnMQz7QHN2261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>俄称击落上千架无人机 乌称变电站遭袭</h3>
+        <p class="brief">俄国防部称18日打击乌物流中心等目标，17日晚至18日早在别尔哥罗德州、列宁格勒州、莫斯科地区击落上千架乌克兰无人机。乌方称多地变电站遭袭，并称打击俄坦克、装甲车等装备。双方互袭持续，乌能源设施与俄防空承压。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>双方均以战报形式通报打击与拦截，未提新提法。</p></div>
+            <div class="layer"><b>权力</b><p>国防部层级通报，与既有军事目标一致，无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>无钱、考核、名单或标准等兑现信息。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能双方战报存在夸大，实际拦截与受损程度待核实。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无独立信源证实击落上千架无人机或变电站遭袭，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#24</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">178字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEweORQIJJp3bnMQz7QHN2261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>欧洲外交人员遭犹太定居者袭击</h3>
+        <p class="brief">据多家媒体17日报道，一支载有多名欧洲国家外交人员的车队在约旦河西岸遭犹太定居者袭击。法国和比利时称，遭袭者包括一名法国市长及比利时、波兰外交人员，要求以色列立即逮捕肇事者并制止此类暴力。巴勒斯坦副总统谢赫谴责袭击，以军称访问前未协调、事发时无士兵在场。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>报道以“外交人员遭袭”定性，突出欧洲国家要求以方逮捕肇事者。</p></div>
+            <div class="layer"><b>权力</b><p>外交事件由媒体披露，法比官方表态，以军以未协调回应，与以方安全目标无直接冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>无钱、无考核、无名单、无标准，仅有逮捕与制止暴力的要求。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能该事件推动欧洲对以施压，间接影响相关地区商业环境。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无欧洲国家对以采取实质外交或经济措施，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#25</span>
+          <span class="badge s-noise">信号 噪音</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">104字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEweORQIJJp3bnMQz7QHN2261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>加拿大一军事基地发生火灾</h3>
+        <p class="brief">加拿大西部艾伯塔省一军事基地17日晚发生严重事件并引发大火。加国防部声明称事件造成人员伤亡，未透露人数；加媒报道称爆炸引发火灾，已致至少7人死亡、数十人受伤。事件涉及军方设施与人员安全，后续信息有待官方进一步披露。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>加国防部声明仅确认人员伤亡，未提具体数字，与媒体披露的至少7人死亡存在口径差。</p></div>
+            <div class="layer"><b>权力</b><p>国防部声明属事故通报，层级为部门表态，与既有军事目标无直接冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>原文无钱、考核、名单、标准等兑现信息。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能后续官方披露的伤亡数字与媒体口径出现更大差异。</p>
+          <p class="falsify"><b>证伪条件</b>若加拿大国防部后续公布具体伤亡人数且与媒体一致，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#26</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">141字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEweORQIJJp3bnMQz7QHN2261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>美加州南部多处林火持续燃烧</h3>
+        <p class="brief">美国加州林业和消防局17日称，南部多起林火仍在燃烧。奥兰治县部分建筑受损或被毁，约16000人一度被要求撤离；圣迭戈县一处林火未完全控制。风速减弱、湿度上升使火势缓和，但火灾风险依然存在。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>文本层：以消防部门通报口径陈述灾情与撤离人数，未提政策或经济影响。</p></div>
+            <div class="layer"><b>权力</b><p>权力层：州消防局发布灾情信息，属地方应急通报，与既有目标无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>兑现层：无资金、考核、名单或标准等硬性安排。</p></div>
+            <div class="layer"><b>商业</b><p>商业层：与生意基本无关。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能火势反复导致撤离范围扩大。</p>
+          <p class="falsify"><b>证伪条件</b>若后续通报显示火势完全受控且无新增撤离，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#27</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">113字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEweORQIJJp3bnMQz7QHN2261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>肯尼亚新增4例埃博拉确诊病例</h3>
+        <p class="brief">肯尼亚卫生部17日称新增4例本迪布焦型埃博拉病例，累计确诊7例，其中1例死亡，4例新增病例确诊时均处于隔离管控中。目前暂无证据表明存在社区传播。本月6日该国宣布首例输入性确诊病例。影响集中在肯尼亚公共卫生体系，方向是输入性疫情在隔离范围内被识别，尚未扩散至社区。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>口径从首例输入性病例转为新增4例隔离管控中病例，累计7例、死亡1例。</p></div>
+            <div class="layer"><b>权力</b><p>卫生部声明层级，与既有疫情防控目标不冲突，强调暂无社区传播。</p></div>
+            <div class="layer"><b>兑现</b><p>原文未提资金、考核、名单或标准，仅有隔离管控和确诊数字。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能隔离管控中的病例数继续增加，改变暂无社区传播的判断。</p>
+          <p class="falsify"><b>证伪条件</b>若后续出现社区传播证据或确诊病例大幅上升，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#28</span>
+          <span class="badge s-noise">信号 噪音</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">256字</span>
+          <a class="src" href="https://tv.cctv.com/2026/10/18/VIDEsBhUXzTdG3NOaeE1Is0r261018.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>中国传统节日·重阳</h3>
+        <p class="brief">重阳节是中国人敬老孝亲的节日，九月初九日月并阳、两九相重故称重阳。节日风俗有登高赏秋、佩戴茱萸、吃重阳糕、饮菊花茶，菊花被视作高洁、淡泊、长寿的象征。敬老孝亲成为节日最厚重的底色，节日文化内涵得到传播。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>以节日文化科普口径呈现，强调敬老孝亲与风俗风物。</p></div>
+            <div class="layer"><b>权力</b><p>媒体文化报道，无文种层级，与既有目标无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>无资金、考核、名单或标准等兑现要素。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能节日文化传播带动相关消费场景。</p>
+          <p class="falsify"><b>证伪条件</b>若原文出现具体消费数据或商业安排，这条判断就是错的。</p>
         </details>
       </article>
 
-  <h2>全部条目（按播出顺序）</h2>
-  <ul class="rest">
-        <li>
-          <span class="no">#01</span>
-          <span class="kind">新闻</span>
-          <span class="t">【新思想引领新征程】绘就幸福“夕阳红” 持续增进民生福祉</span>
-          <span class="len">1247字</span>
-        </li>
-        <li>
-          <span class="no">#02</span>
-          <span class="kind">新闻</span>
-          <span class="t">李强同乌兹别克斯坦总理会谈</span>
-          <span class="len">590字</span>
-        </li>
-        <li>
-          <span class="no">#03</span>
-          <span class="kind">新闻</span>
-          <span class="t">李强会见乌兹别克斯坦总统</span>
-          <span class="len">301字</span>
-        </li>
-        <li>
-          <span class="no">#04</span>
-          <span class="kind">新闻</span>
-          <span class="t">李强赴杜尚别对塔吉克斯坦进行正式访问并出席上海合作组织成员国政府首脑（总理）理事会第二十五次会议</span>
-          <span class="len">476字</span>
-        </li>
-        <li>
-          <span class="no">#05</span>
-          <span class="kind">新闻</span>
-          <span class="t">【赓续长征精神 奋进复兴征程】甘肃：长征足迹印沃土 红色陇原谱新篇</span>
-          <span class="len">519字</span>
-        </li>
-        <li>
-          <span class="no">#08</span>
-          <span class="kind">新闻</span>
-          <span class="t">全国铁路列车车次编排改革启动</span>
-          <span class="len">407字</span>
-        </li>
-        <li>
-          <span class="no">#10</span>
-          <span class="kind">新闻</span>
-          <span class="t">第五届亚残运会今天开幕</span>
-          <span class="len">264字</span>
-        </li>
-        <li>
-          <span class="no">#12</span>
-          <span class="kind">快讯</span>
-          <span class="t">第四届“良渚论坛”在浙江杭州开幕</span>
-          <span class="len">110字</span>
-        </li>
-        <li>
-          <span class="no">#13</span>
-          <span class="kind">快讯</span>
-          <span class="t">前三季度深圳对APEC经济体进出口同比增长40%</span>
-          <span class="len">108字</span>
-        </li>
-        <li>
-          <span class="no">#14</span>
-          <span class="kind">快讯</span>
-          <span class="t">中国农业发展银行2000亿元信贷资金专项用于秋粮收购</span>
-          <span class="len">72字</span>
-        </li>
-        <li>
-          <span class="no">#15</span>
-          <span class="kind">快讯</span>
-          <span class="t">市场监管总局发布15项氢能国家标准</span>
-          <span class="len">78字</span>
-        </li>
-        <li>
-          <span class="no">#16</span>
-          <span class="kind">快讯</span>
-          <span class="t">前三季度全国铁路发送旅客37.1亿人次</span>
-          <span class="len">103字</span>
-        </li>
-        <li>
-          <span class="no">#17</span>
-          <span class="kind">快讯</span>
-          <span class="t">我国确定“十五五”适宜增殖放流水生物种345种</span>
-          <span class="len">112字</span>
-        </li>
-        <li>
-          <span class="no">#18</span>
-          <span class="kind">快讯</span>
-          <span class="t">中韩海上执法部门圆满完成联合巡航</span>
-          <span class="len">106字</span>
-        </li>
-        <li>
-          <span class="no">#19</span>
-          <span class="kind">快讯</span>
-          <span class="t">第二十五届中国上海国际艺术节开幕</span>
-          <span class="len">102字</span>
-        </li>
-        <li>
-          <span class="no">#20</span>
-          <span class="kind">快讯</span>
-          <span class="t">2026长三角国际青年电影周开幕</span>
-          <span class="len">155字</span>
-        </li>
-        <li>
-          <span class="no">#21</span>
-          <span class="kind">快讯</span>
-          <span class="t">2026国际武当太极文化节开幕</span>
-          <span class="len">70字</span>
-        </li>
-        <li>
-          <span class="no">#22</span>
-          <span class="kind">新闻</span>
-          <span class="t">也门胡塞武装称击落沙特武装直升机 沙特主导联军称拦截多架无人机</span>
-          <span class="len">381字</span>
-        </li>
-        <li>
-          <span class="no">#23</span>
-          <span class="kind">快讯</span>
-          <span class="t">俄称击落上千架无人机 乌称变电站遭袭</span>
-          <span class="len">123字</span>
-        </li>
-        <li>
-          <span class="no">#24</span>
-          <span class="kind">快讯</span>
-          <span class="t">欧洲外交人员遭犹太定居者袭击</span>
-          <span class="len">178字</span>
-        </li>
-        <li>
-          <span class="no">#25</span>
-          <span class="kind">快讯</span>
-          <span class="t">加拿大一军事基地发生火灾</span>
-          <span class="len">104字</span>
-        </li>
-        <li>
-          <span class="no">#26</span>
-          <span class="kind">快讯</span>
-          <span class="t">美加州南部多处林火持续燃烧</span>
-          <span class="len">141字</span>
-        </li>
-        <li>
-          <span class="no">#27</span>
-          <span class="kind">快讯</span>
-          <span class="t">肯尼亚新增4例埃博拉确诊病例</span>
-          <span class="len">113字</span>
-        </li>
-        <li>
-          <span class="no">#28</span>
-          <span class="kind">新闻</span>
-          <span class="t">中国传统节日·重阳</span>
-          <span class="len">256字</span>
-        </li></ul>
+  
+
+  
 
   <footer>
-    本页由 T02「新闻联播每日汇总」流水线生成 ｜ 生成时间 2026-10-19 19:09<br>
+    本页由 T02「新闻联播每日汇总」流水线生成 ｜ 生成时间 2026-10-20 21:17<br>
     事实均可回溯至央视网原文；解读为观点，不构成任何投资建议。
   </footer>
 </div>
