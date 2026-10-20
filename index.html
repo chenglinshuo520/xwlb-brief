@@ -1,17 +1,85 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>新闻联播每日汇总 · 建设中</title>
+<title>往期 · 新闻联播每日汇总</title>
 <style>
-body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0f1115;color:#e6e8eb;font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
-.card{max-width:520px;padding:40px 32px;border:1px solid #262b33;border-radius:16px;background:#151920;text-align:center}
-h1{font-size:20px;margin:0 0 12px}
-p{color:#9aa4b2;line-height:1.8;font-size:14px;margin:6px 0}
-.tag{display:inline-block;margin-top:18px;padding:4px 10px;border-radius:99px;background:#1d2430;color:#7aa2f7;font-size:12px}
-</style></head>
-<body><div class="card">
-<h1>新闻联播每日汇总</h1>
-<p>任务编号 T02 · 发布通道已接通</p>
-<p>每日汇新闻联播全量条目，生成 HTML 日报。</p>
-<span class="tag">建设中 · 2026-10-19</span>
-</div></body></html>
+  :root { --bg:#0e1116; --panel:#151a21; --line:#262e39; --fg:#e6e9ee;
+           --dim:#9aa5b4; --mid:#c3ccd8; --accent:#6ea8fe; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f5f7fa; --panel:#fff; --line:#e2e8f0; --fg:#1a2230;
+             --dim:#667085; --mid:#344054; --accent:#2563eb; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font:15px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  .wrap { max-width:820px; margin:0 auto; padding:32px 20px 80px; }
+  h1 { font-size:23px; margin:0 0 6px; }
+  .sub { color:var(--dim); font-size:13px; }
+  .stats { display:flex; gap:18px; margin:18px 0 8px; color:var(--dim); font-size:13px; }
+  .stats b { color:var(--accent); font-size:17px; margin-right:4px; }
+  section { margin-top:26px; }
+  h2 { font-size:13px; letter-spacing:2px; color:var(--dim); font-weight:600;
+        margin:0 0 10px; padding-bottom:8px; border-bottom:1px solid var(--line); }
+  .row { display:grid; grid-template-columns:52px 104px 1fr 86px 16px;
+          gap:10px; align-items:center; padding:11px 12px; text-decoration:none;
+          color:var(--mid); border-radius:10px; border:1px solid transparent; }
+  .row:hover { background:var(--panel); border-color:var(--line); }
+  .d { color:var(--accent); font-weight:600; font-variant-numeric:tabular-nums; }
+  .meta { font-size:12px; color:var(--dim); }
+  .t { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; }
+  .net { text-align:right; font-size:12px; font-variant-numeric:tabular-nums; }
+  .up { color:#ef4444; } .down { color:#22c55e; } .dim { color:var(--dim); }
+  .go { color:var(--dim); text-align:right; }
+  .empty { color:var(--dim); padding:30px 0; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--line);
+            color:var(--dim); font-size:12px; }
+  @media (max-width:600px) {
+    .row { grid-template-columns:46px 1fr 16px; }
+    .meta, .net { display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>往期归档</h1>
+  <div class="sub">新闻联播每日汇总 ｜ <a href="latest.html" style="color:var(--accent);text-decoration:none">最新一期 →</a></div>
+  <div class="stats">
+    <span><b>3</b>天</span>
+    <span><b>72</b>条</span>
+  </div>
+  
+      <section>
+        <h2>2026 年 10 月</h2>
+        
+        <a class="row" href="2026-10-20.html">
+          <span class="d">10/20</span>
+          <span class="meta">20 条 · 简报 20</span>
+          <span class="t">前三季度规模以上工业增加值同比增长5.3%</span>
+          <span class="net"><span class='up'>+13.1</span> 亿</span>
+          <span class="go">›</span>
+        </a>
+        <a class="row" href="2026-10-19.html">
+          <span class="d">10/19</span>
+          <span class="meta">24 条 · 简报 24</span>
+          <span class="t">我国加快建设贯通国家沿边沿海“黄金大外环”</span>
+          <span class="net"><span class='up'>+286.6</span> 亿</span>
+          <span class="go">›</span>
+        </a>
+        <a class="row" href="2026-10-18.html">
+          <span class="d">10/18</span>
+          <span class="meta">28 条 · 简报 28</span>
+          <span class="t">【新思想引领新征程】绘就幸福“夕阳红” 持续增进民生福祉</span>
+          <span class="net"><span class='dim'>—</span> 亿</span>
+          <span class="go">›</span>
+        </a>
+      </section>
+  
+  <footer>
+    每日排名按信号强度（强 → 中 → 弱 → 噪音）取前两条 · 净流入为板块估算口径<br>
+    归档不覆盖：每个日期一个独立页面，长期可访问。
+  </footer>
+</div>
+</body>
+</html>
