@@ -44,6 +44,11 @@
   #tts-bar select { background:var(--panel2); border:1px solid var(--line); color:var(--mid);
                      border-radius:8px; padding:2px 6px; font-size:12px; }
   #tts-status { color:var(--accent); }
+  .audio-card { background:var(--panel); border:1px solid var(--line); border-radius:14px;
+                 padding:14px 16px; margin:0 0 18px; }
+  .audio-head { font-size:14px; font-weight:600; margin-bottom:10px; }
+  .audio-card audio { width:100%; height:36px; }
+  .audio-sub { font-size:12px; color:var(--dim); margin-top:8px; }
   .no { font-family:ui-monospace,Consolas,monospace; color:var(--accent); }
   .badge { padding:2px 8px; border-radius:99px; font-size:11px; border:1px solid transparent; }
   .s-high { background:rgba(74,222,128,.12); color:var(--ok); border-color:rgba(74,222,128,.25); }
@@ -131,6 +136,13 @@
       </select>
     </label>
     <span id="tts-status"></span>
+  </div>
+
+  
+  <div class="audio-card">
+    <div class="audio-head">🎧 今日播报<span class="caliber">一人播报 · 约 10 分 32 秒</span></div>
+    <audio controls preload="none" src="audio/2026-10-20.mp3"></audio>
+    <div class="audio-sub">整期要点朗读 · 神经网络语音 · 可在微信内直接播放</div>
   </div>
 
   <div class="stats" style="">
@@ -684,7 +696,7 @@
   
 
   <footer>
-    本页由 T02「新闻联播每日汇总」流水线生成 ｜ 生成时间 2026-10-20 21:35<br>
+    本页由 T02「新闻联播每日汇总」流水线生成 ｜ 生成时间 2026-10-20 21:53<br>
     事实均可回溯至央视网原文；解读为观点，不构成任何投资建议。
   </footer>
 </div>
