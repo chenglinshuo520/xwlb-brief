@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>新闻联播汇总 · 2026-10-20 · 预览</title>
+<style>
+  :root {
+    --bg:#0e1116; --panel:#151a21; --panel2:#1b212a; --line:#262e39;
+    --fg:#e6e9ee; --dim:#9aa5b4; --mid:#c3ccd8;
+    --accent:#6ea8fe; --ok:#4ade80; --warn:#fbbf24; --bad:#f87171;
+  }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f5f7fa; --panel:#fff; --panel2:#f0f3f7; --line:#e2e8f0;
+             --fg:#1a2230; --dim:#667085; --mid:#344054; --accent:#2563eb; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  .wrap { max-width:860px; margin:0 auto; padding:32px 20px 80px; }
+  header h1 { font-size:24px; margin:0 0 6px; letter-spacing:.5px; }
+  .sub { color:var(--dim); font-size:13px; }
+  .notice { margin:18px 0 26px; padding:12px 14px; border:1px dashed var(--line);
+             border-radius:10px; color:var(--dim); font-size:13px; background:var(--panel); }
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:0 0 28px; }
+  .stat { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px; }
+  .stat b { display:block; font-size:22px; color:var(--accent); font-weight:600; }
+  .stat span { font-size:12px; color:var(--dim); }
+  h2 { font-size:15px; letter-spacing:2px; color:var(--dim); font-weight:600;
+        margin:34px 0 14px; padding-bottom:8px; border-bottom:1px solid var(--line); }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px;
+           padding:18px 20px; margin-bottom:14px; }
+  .meta { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:12px; color:var(--dim); }
+  .no { font-family:ui-monospace,Consolas,monospace; color:var(--accent); }
+  .badge { padding:2px 8px; border-radius:99px; font-size:11px; border:1px solid transparent; }
+  .s-high { background:rgba(74,222,128,.12); color:var(--ok); border-color:rgba(74,222,128,.25); }
+  .s-mid  { background:rgba(251,191,36,.12); color:var(--warn); border-color:rgba(251,191,36,.25); }
+  .s-low, .s-noise { background:rgba(148,163,184,.12); color:var(--dim); border-color:var(--line); }
+  .a-in   { background:rgba(110,168,254,.14); color:var(--accent); }
+  .a-watch{ background:rgba(251,191,36,.10); color:var(--warn); }
+  .a-out  { background:rgba(248,113,113,.12); color:var(--bad); }
+  .a-none { background:var(--panel2); color:var(--dim); }
+  .src { margin-left:auto; color:var(--dim); text-decoration:none; }
+  .src:hover { color:var(--accent); }
+  .card h3 { font-size:17px; margin:10px 0 10px; line-height:1.5; }
+  .brief { margin:0 0 12px; color:var(--mid); }
+  details { border-top:1px dashed var(--line); padding-top:10px; }
+  summary { cursor:pointer; color:var(--accent); font-size:13px; outline:none; }
+  .layers { display:grid; gap:8px; margin:12px 0; }
+  .layer { background:var(--panel2); border-radius:9px; padding:9px 12px; }
+  .layer b { color:var(--accent); font-size:12px; margin-right:8px; }
+  .layer p { display:inline; margin:0; color:var(--mid); font-size:14px; }
+  .against, .falsify { font-size:13px; color:var(--dim); margin:6px 0; }
+  .against b, .falsify b { color:var(--warn); margin-right:8px; }
+  ul.rest { list-style:none; padding:0; margin:0; }
+  ul.rest li { display:flex; gap:10px; align-items:baseline; padding:9px 4px;
+                border-bottom:1px solid var(--line); font-size:14px; }
+  .kind { font-size:11px; color:var(--dim); background:var(--panel2);
+           padding:1px 6px; border-radius:4px; flex:none; }
+  ul.rest .t { flex:1; color:var(--mid); }
+  ul.rest .len { flex:none; color:var(--dim); font-size:12px; }
+  /* ---- 资金面 ---- */
+  .caliber { font-size:11px; font-weight:400; letter-spacing:0; color:var(--dim);
+              border:1px solid var(--line); border-radius:99px; padding:1px 8px; margin-left:8px; }
+  .flow { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:720px) { .grid2 { grid-template-columns:1fr; } }
+  .flow .stat b { font-size:19px; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:12px;
+            padding:14px 16px; margin-bottom:12px; }
+  .panel h4 { margin:0 0 8px; font-size:13px; color:var(--dim); font-weight:600; }
+  table.flow-t { width:100%; border-collapse:collapse; font-size:13px; }
+  table.flow-t th { text-align:right; color:var(--dim); font-weight:500; padding:4px 6px; font-size:12px; }
+  table.flow-t th:first-child, table.flow-t td:first-child { text-align:left; }
+  table.flow-t td { padding:5px 6px; text-align:right; color:var(--mid);
+                     border-top:1px solid var(--line); font-variant-numeric:tabular-nums; }
+  .up { color:#ef4444; } .down { color:#22c55e; }
+  table.flow-t td.up { color:#ef4444; } table.flow-t td.down { color:#22c55e; }
+  table.flow-t { table-layout:fixed; }
+  table.flow-t th:nth-child(1), table.flow-t td:nth-child(1) { width:52%; }
+  .sector h3 { display:flex; align-items:center; gap:10px; }
+  .stocks { width:100%; border-collapse:collapse; font-size:13px; margin-top:6px; }
+  .stocks th { text-align:left; color:var(--dim); font-weight:500; font-size:12px;
+                padding:6px 6px; border-bottom:1px solid var(--line); }
+  .stocks td { padding:7px 6px; border-bottom:1px solid var(--line); color:var(--mid);
+                font-variant-numeric:tabular-nums; }
+  .stocks tr:last-child td { border-bottom:none; }
+  .dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:5px; }
+  .d-green { background:#22c55e; } .d-amber { background:#f59e0b; } .d-red { background:#ef4444; }
+  .links a { color:var(--dim); text-decoration:none; margin-right:8px; font-size:12px; }
+  .links a:hover { color:var(--accent); }
+  footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--line);
+            color:var(--dim); font-size:12px; line-height:1.9; }
+  @media (max-width:600px) { .stats { grid-template-columns:repeat(2,1fr); } .flow { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>新闻联播 · 每日汇总</h1>
+    <div class="sub">2026-10-20 ｜ 预览版 ｜ 数据源：央视网《新闻联播》</div>
+  </header>
+
+  <div class="notice">
+    条目与正文为真实抓取；解读待生成。
+  </div>
+
+  <div class="stats" style="">
+    <div class="stat"><b>20</b><span>处理单元</span></div>
+    <div class="stat"><b>9</b><span>独立新闻</span></div>
+    <div class="stat"><b>11</b><span>快讯子条</span></div>
+    <div class="stat"><b>6,706</b><span>正文总字数</span></div>
+  </div>
+
+  
+
+  <div class="notice">今日暂无简报与解读：内容生成需要接入模型 API（尚未配置）。以下为全部条目、资金面与板块候选。</div>
+
+  
+
+  <h2>全部条目（按播出顺序）</h2><ul class="rest">
+        <li>
+          <span class="no">#01</span>
+          <span class="kind">新闻</span>
+          <span class="t">习近平致信祝贺中央社会主义学院建院70周年强调 持续加强政治培训广泛凝聚政治共识 更好服务党和国家工作大局 王沪宁出席庆祝大会并讲话</span>
+          <span class="len">1013字</span>
+        </li>
+        <li>
+          <span class="no">#02</span>
+          <span class="kind">新闻</span>
+          <span class="t">央视快评：持续加强政治培训 广泛凝聚政治共识</span>
+          <span class="len">50字</span>
+        </li>
+        <li>
+          <span class="no">#03</span>
+          <span class="kind">新闻</span>
+          <span class="t">【赓续长征精神 奋进复兴征程】传承红色血脉 打好实现建军一百年奋斗目标攻坚战</span>
+          <span class="len">1452字</span>
+        </li>
+        <li>
+          <span class="no">#04</span>
+          <span class="kind">新闻</span>
+          <span class="t">李强出席上海合作组织成员国政府首脑（总理）理事会第二十五次会议</span>
+          <span class="len">617字</span>
+        </li>
+        <li>
+          <span class="no">#05</span>
+          <span class="kind">新闻</span>
+          <span class="t">李强会见伊朗第一副总统</span>
+          <span class="len">296字</span>
+        </li>
+        <li>
+          <span class="no">#06</span>
+          <span class="kind">新闻</span>
+          <span class="t">李强会见白俄罗斯总理</span>
+          <span class="len">301字</span>
+        </li>
+        <li>
+          <span class="no">#07</span>
+          <span class="kind">新闻</span>
+          <span class="t">丁薛祥在河北雄安新区出席国家数据集团有限公司成立大会并调研</span>
+          <span class="len">592字</span>
+        </li>
+        <li>
+          <span class="no">#08</span>
+          <span class="kind">新闻</span>
+          <span class="t">【“十五五”开好局起好步】我国首次编制文化遗产保护传承五年规划</span>
+          <span class="len">562字</span>
+        </li>
+        <li>
+          <span class="no">#09</span>
+          <span class="kind">新闻</span>
+          <span class="t">前三季度规模以上工业增加值同比增长5.3%</span>
+          <span class="len">389字</span>
+        </li>
+        <li>
+          <span class="no">#10</span>
+          <span class="kind">快讯</span>
+          <span class="t">第140届广交会首期举办335场新品首发活动</span>
+          <span class="len">119字</span>
+        </li>
+        <li>
+          <span class="no">#11</span>
+          <span class="kind">快讯</span>
+          <span class="t">南水北调东线启动2026—2027年度全线调水</span>
+          <span class="len">105字</span>
+        </li>
+        <li>
+          <span class="no">#12</span>
+          <span class="kind">快讯</span>
+          <span class="t">今年三季度全国共1.92亿人次出入境</span>
+          <span class="len">115字</span>
+        </li>
+        <li>
+          <span class="no">#13</span>
+          <span class="kind">快讯</span>
+          <span class="t">前三季度我国邮政行业寄递业务量同比增长3.7%</span>
+          <span class="len">71字</span>
+        </li>
+        <li>
+          <span class="no">#14</span>
+          <span class="kind">快讯</span>
+          <span class="t">2026年秋招推出第二批就业服务活动</span>
+          <span class="len">98字</span>
+        </li>
+        <li>
+          <span class="no">#15</span>
+          <span class="kind">快讯</span>
+          <span class="t">“何以中国·当惊世界殊”网络主题宣传活动举行</span>
+          <span class="len">104字</span>
+        </li>
+        <li>
+          <span class="no">#16</span>
+          <span class="kind">快讯</span>
+          <span class="t">俄外长访问伊朗讨论地区局势等问题</span>
+          <span class="len">170字</span>
+        </li>
+        <li>
+          <span class="no">#17</span>
+          <span class="kind">快讯</span>
+          <span class="t">也门胡塞武装称对沙特目标发动多次打击</span>
+          <span class="len">163字</span>
+        </li>
+        <li>
+          <span class="no">#18</span>
+          <span class="kind">快讯</span>
+          <span class="t">美媒称美未批准向乌转让“爱国者”拦截弹</span>
+          <span class="len">222字</span>
+        </li>
+        <li>
+          <span class="no">#19</span>
+          <span class="kind">快讯</span>
+          <span class="t">法国政府宣布多地实施宵禁</span>
+          <span class="len">173字</span>
+        </li>
+        <li>
+          <span class="no">#20</span>
+          <span class="kind">快讯</span>
+          <span class="t">西班牙多地遭遇洪灾</span>
+          <span class="len">94字</span>
+        </li></ul>
+
+  <footer>
+    本页由 T02「新闻联播每日汇总」流水线生成 ｜ 生成时间 2026-10-20 21:07<br>
+    事实均可回溯至央视网原文；解读为观点，不构成任何投资建议。
+  </footer>
+</div>
+</body>
+</html>
