@@ -780,12 +780,18 @@
   
 
   <footer>
-    本页由 T02「新闻联播每日汇总」流水线生成 ｜ 生成时间 2026-10-20 21:25<br>
+    本页由 T02「新闻联播每日汇总」流水线生成 ｜ 生成时间 2026-10-20 21:35<br>
     事实均可回溯至央视网原文；解读为观点，不构成任何投资建议。
   </footer>
 </div>
 <script>
-
+/* T02 语音朗读引擎
+ * 目标：减少机械感。做法——
+ *   1) 优先挑选"自然音"语音（Edge 的 Xiaoxiao/Yunxi 等神经网络语音）
+ *   2) 分段朗读：标题、简报、四层、反方、证伪各自一句话，中间留停顿
+ *   3) 不同段落用不同的语速与音高：标题稍慢稍低，解读稍快稍高
+ *   4) 四层解读的标签改成口语说法（"先说措辞""再看分量"…），避免念术语
+ */
 (function () {
   var synth = window.speechSynthesis;
   var bar = document.getElementById('tts-bar');
@@ -793,69 +799,195 @@
     if (bar) bar.style.display = 'none';
     return;
   }
+
   var cards = Array.prototype.slice.call(document.querySelectorAll('article.card'));
-  var queue = [], gen = 0, rate = 1, cur = null;
   var status = document.getElementById('tts-status');
   var rateSel = document.getElementById('tts-rate');
 
-  try { var saved = localStorage.getItem('ttsRate'); if (saved) rate = parseFloat(saved) || 1; } catch (e) {}
+  var gen = 0;
+  var rate = 1;
+  var queue = [];
+  var cur = null;
+
+  var SPOKEN = {
+    '文本': '先说措辞',
+    '权力': '再看分量',
+    '兑现': '然后看落实',
+    '商业': '最后说生意'
+  };
+  var PREF = ['Xiaoxiao', '晓晓', 'Yunxi', '云希', 'Yunyang', '云扬',
+              'Xiaoyi', '晓伊', 'Xiaochen', '晓辰', 'Natural', 'Neural', 'Online'];
+
+  try {
+    var saved = localStorage.getItem('ttsRate');
+    if (saved) rate = parseFloat(saved) || 1;
+  } catch (e) {}
+
   if (rateSel) {
     rateSel.value = String(rate);
     rateSel.addEventListener('change', function () {
       rate = parseFloat(this.value) || 1;
       try { localStorage.setItem('ttsRate', this.value); } catch (e) {}
-      if (cur) { var t = cur.text, c = cur.card; stop(); start([c]); }
     });
   }
 
   function pickVoice() {
-    var vs = synth.getVoices() || [];
-    for (var i = 0; i < vs.length; i++) if (/^zh[-_]?CN/i.test(vs[i].lang)) return vs[i];
-    for (var j = 0; j < vs.length; j++) if (/^zh/i.test(vs[j].lang)) return vs[j];
-    return null;
+    var all = synth.getVoices() || [];
+    var zh = [];
+    for (var i = 0; i < all.length; i++) {
+      if (/^zh/i.test(all[i].lang)) zh.push(all[i]);
+    }
+    if (!zh.length) return null;
+
+    var best = null;
+    var bestScore = -1;
+    for (var k = 0; k < zh.length; k++) {
+      var v = zh[k];
+      var sc = 0;
+      if (/zh[-_]?CN/i.test(v.lang)) sc += 3;
+      for (var j = 0; j < PREF.length; j++) {
+        if (v.name.indexOf(PREF[j]) >= 0) { sc += 5 - j * 0.25; break; }
+      }
+      if (/natural|neural|online/i.test(v.name)) sc += 2;
+      if (!v.localService) sc += 0.5;
+      if (sc > bestScore) { bestScore = sc; best = v; }
+    }
+    return best;
   }
+
+  function segmentsFor(card) {
+    var segs = [];
+    var h = card.querySelector('h3');
+    var brief = card.querySelector('.brief');
+
+    if (h) segs.push({ text: h.textContent.trim(), rate: 0.9, pitch: 0.95, pause: 480 });
+    if (brief) segs.push({ text: brief.textContent.trim(), rate: 1.0, pitch: 1.0, pause: 620 });
+
+    var layers = card.querySelectorAll('.layer');
+    for (var i = 0; i < layers.length; i++) {
+      var b = layers[i].querySelector('b');
+      var p = layers[i].querySelector('p');
+      if (!p) continue;
+      var label = b ? (SPOKEN[b.textContent.trim()] || b.textContent.trim()) : '';
+      segs.push({
+        text: (label ? label + '，' : '') + p.textContent.trim(),
+        rate: 1.03, pitch: 1.04, pause: 340
+      });
+    }
+
+    var a = card.querySelector('.against');
+    var f = card.querySelector('.falsify');
+    if (a) {
+      segs.push({
+        text: '不过话说回来，' + a.textContent.replace(/^反方一句\s*/, '').trim(),
+        rate: 0.96, pitch: 0.98, pause: 320
+      });
+    }
+    if (f) {
+      segs.push({
+        text: '那什么情况下算我看错了呢？' + f.textContent.replace(/^证伪条件\s*/, '').trim(),
+        rate: 0.96, pitch: 0.98, pause: 520
+      });
+    }
+    return segs;
+  }
+
   function highlight(el) {
-    cards.forEach(function (c) { c.classList.remove('speaking'); });
-    if (el) { el.classList.add('speaking'); try { el.scrollIntoView({block: 'center', behavior: 'smooth'}); } catch (e) {} }
+    for (var i = 0; i < cards.length; i++) cards[i].classList.remove('speaking');
+    if (el) {
+      el.classList.add('speaking');
+      try { el.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) {}
+    }
   }
-  function finish() { highlight(null); if (status) status.textContent = ''; cur = null; }
 
-  function playFrom(i, my, list) {
-    if (my !== gen || i >= list.length) { if (my === gen) finish(); return; }
-    var card = list[i];
-    highlight(card);
-    if (status) status.textContent = '朗读中 ' + (i + 1) + '/' + list.length;
-    var node = card.querySelector('.tts-text');
-    if (!node) { playFrom(i + 1, my, list); return; }
+  function finish() {
+    highlight(null);
+    if (status) status.textContent = '';
+    cur = null;
+  }
 
-    var u = new SpeechSynthesisUtterance(node.textContent);
-    u.lang = 'zh-CN'; u.rate = rate; u.pitch = 1;
-    var v = pickVoice(); if (v) u.voice = v;
-    cur = { card: card, text: node.textContent };
-    u.onend = function () { if (my === gen) playFrom(i + 1, my, list); };
-    u.onerror = function () { if (my === gen) playFrom(i + 1, my, list); };
+  function speak(seg, my, done) {
+    var u = new SpeechSynthesisUtterance(seg.text);
+    u.lang = 'zh-CN';
+    u.rate = Math.max(0.5, Math.min(2, rate * (seg.rate || 1)));
+    u.pitch = seg.pitch || 1;
+    u.volume = 1;
+    var v = pickVoice();
+    if (v) u.voice = v;
+    cur = u;
+    u.onend = function () { if (my === gen) done(); };
+    u.onerror = function () { if (my === gen) done(); };
     synth.speak(u);
   }
-  function stop() { gen++; queue = []; try { synth.cancel(); } catch (e) {} finish(); }
-  function start(list) { gen++; var my = gen; queue = list; playFrom(0, my, list); }
+
+  function playCard(index, my) {
+    if (my !== gen) return;
+    if (index >= queue.length) { finish(); return; }
+
+    var card = queue[index];
+    highlight(card);
+    if (status) status.textContent = '朗读中 ' + (index + 1) + '/' + queue.length;
+
+    var segs = segmentsFor(card);
+    var i = 0;
+
+    function step() {
+      if (my !== gen) return;
+      if (i >= segs.length) {
+        setTimeout(function () { playCard(index + 1, my); }, 520);
+        return;
+      }
+      var seg = segs[i++];
+      speak(seg, my, function () {
+        setTimeout(step, seg.pause || 260);
+      });
+    }
+    step();
+  }
+
+  function stop() {
+    gen++;
+    queue = [];
+    try { synth.cancel(); } catch (e) {}
+    finish();
+  }
+
+  function start(list) {
+    gen++;
+    var my = gen;
+    queue = list;
+    playCard(0, my);
+  }
 
   var allBtn = document.getElementById('tts-all');
-  if (allBtn) allBtn.addEventListener('click', function () {
-    stop();
-    if (!cards.length) { if (status) status.textContent = '没有可朗读的内容'; return; }
-    start(cards);
-  });
+  if (allBtn) {
+    allBtn.addEventListener('click', function () {
+      stop();
+      if (!cards.length) {
+        if (status) status.textContent = '没有可朗读的内容';
+        return;
+      }
+      start(cards);
+    });
+  }
+
   var stopBtn = document.getElementById('tts-stop');
   if (stopBtn) stopBtn.addEventListener('click', stop);
 
-  cards.forEach(function (card) {
-    var btn = card.querySelector('.tts-btn');
-    if (!btn) return;
-    btn.addEventListener('click', function () { stop(); start([card]); });
-  });
+  for (var n = 0; n < cards.length; n++) {
+    (function (card) {
+      var btn = card.querySelector('.tts-btn');
+      if (!btn) return;
+      btn.addEventListener('click', function () { stop(); start([card]); });
+    })(cards[n]);
+  }
 
-  if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = function () {};
-  window.addEventListener('beforeunload', function () { try { synth.cancel(); } catch (e) {} });
+  if (synth.onvoiceschanged !== undefined) {
+    synth.onvoiceschanged = function () {};
+  }
+  window.addEventListener('beforeunload', function () {
+    try { synth.cancel(); } catch (e) {}
+  });
 })();
 
 </script>
