@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>新闻联播汇总 · 2026-11-20 · 预览</title>
+<style>
+  :root {
+    --bg:#0e1116; --panel:#151a21; --panel2:#1b212a; --line:#262e39;
+    --fg:#e6e9ee; --dim:#9aa5b4; --mid:#c3ccd8;
+    --accent:#6ea8fe; --ok:#4ade80; --warn:#fbbf24; --bad:#f87171;
+  }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f5f7fa; --panel:#fff; --panel2:#f0f3f7; --line:#e2e8f0;
+             --fg:#1a2230; --dim:#667085; --mid:#344054; --accent:#2563eb; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  .wrap { max-width:860px; margin:0 auto; padding:32px 20px 80px; }
+  header h1 { font-size:24px; margin:0 0 6px; letter-spacing:.5px; }
+  .sub { color:var(--dim); font-size:13px; }
+  .notice { margin:18px 0 26px; padding:12px 14px; border:1px dashed var(--line);
+             border-radius:10px; color:var(--dim); font-size:13px; background:var(--panel); }
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:0 0 28px; }
+  .stat { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px; }
+  .stat b { display:block; font-size:22px; color:var(--accent); font-weight:600; }
+  .stat span { font-size:12px; color:var(--dim); }
+  h2 { font-size:15px; letter-spacing:2px; color:var(--dim); font-weight:600;
+        margin:34px 0 14px; padding-bottom:8px; border-bottom:1px solid var(--line); }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px;
+           padding:18px 20px; margin-bottom:14px; }
+  .meta { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:12px; color:var(--dim); }
+  .tts-btn { margin:0; background:var(--panel2); border:1px solid var(--line); color:var(--dim);
+              border-radius:99px; padding:2px 10px; font-size:11px; cursor:pointer; line-height:1.6; }
+  .tts-btn:hover { color:var(--accent); border-color:var(--accent); }
+  .card.speaking { outline:2px solid var(--accent); outline-offset:2px; }
+  #tts-bar { position:sticky; top:0; z-index:9; display:flex; gap:8px; align-items:center;
+              flex-wrap:wrap; background:var(--panel); border:1px solid var(--line);
+              border-radius:12px; padding:8px 12px; margin:0 0 18px; font-size:12px; color:var(--dim); }
+  #tts-bar button { background:var(--panel2); border:1px solid var(--line); color:var(--mid);
+                     border-radius:99px; padding:3px 12px; font-size:12px; cursor:pointer; }
+  #tts-bar button:hover { color:var(--accent); border-color:var(--accent); }
+  #tts-bar select { background:var(--panel2); border:1px solid var(--line); color:var(--mid);
+                     border-radius:8px; padding:2px 6px; font-size:12px; }
+  #tts-status { color:var(--accent); }
+  .audio-card { background:var(--panel); border:1px solid var(--line); border-radius:14px;
+                 padding:14px 16px; margin:0 0 18px; }
+  .audio-head { font-size:14px; font-weight:600; margin-bottom:10px; }
+  .audio-card audio { width:100%; height:36px; }
+  .audio-sub { font-size:12px; color:var(--dim); margin-top:8px; }
+  .no { font-family:ui-monospace,Consolas,monospace; color:var(--accent); }
+  .badge { padding:2px 8px; border-radius:99px; font-size:11px; border:1px solid transparent; }
+  .s-high { background:rgba(74,222,128,.12); color:var(--ok); border-color:rgba(74,222,128,.25); }
+  .s-mid  { background:rgba(251,191,36,.12); color:var(--warn); border-color:rgba(251,191,36,.25); }
+  .s-low, .s-noise { background:rgba(148,163,184,.12); color:var(--dim); border-color:var(--line); }
+  .a-in   { background:rgba(110,168,254,.14); color:var(--accent); }
+  .a-watch{ background:rgba(251,191,36,.10); color:var(--warn); }
+  .a-out  { background:rgba(248,113,113,.12); color:var(--bad); }
+  .a-none { background:var(--panel2); color:var(--dim); }
+  .src { margin-left:auto; color:var(--dim); text-decoration:none; }
+  .src:hover { color:var(--accent); }
+  .card h3 { font-size:17px; margin:10px 0 10px; line-height:1.5; }
+  .brief { margin:0 0 12px; color:var(--mid); }
+  details { border-top:1px dashed var(--line); padding-top:10px; }
+  summary { cursor:pointer; color:var(--accent); font-size:13px; outline:none; }
+  .layers { display:grid; gap:8px; margin:12px 0; }
+  .layer { background:var(--panel2); border-radius:9px; padding:9px 12px; }
+  .layer b { color:var(--accent); font-size:12px; margin-right:8px; }
+  .layer p { display:inline; margin:0; color:var(--mid); font-size:14px; }
+  .against, .falsify { font-size:13px; color:var(--dim); margin:6px 0; }
+  .against b, .falsify b { color:var(--warn); margin-right:8px; }
+  ul.rest { list-style:none; padding:0; margin:0; }
+  ul.rest li { display:flex; gap:10px; align-items:baseline; padding:9px 4px;
+                border-bottom:1px solid var(--line); font-size:14px; }
+  .kind { font-size:11px; color:var(--dim); background:var(--panel2);
+           padding:1px 6px; border-radius:4px; flex:none; }
+  ul.rest .t { flex:1; color:var(--mid); }
+  ul.rest .len { flex:none; color:var(--dim); font-size:12px; }
+  /* ---- 资金面 ---- */
+  .caliber { font-size:11px; font-weight:400; letter-spacing:0; color:var(--dim);
+              border:1px solid var(--line); border-radius:99px; padding:1px 8px; margin-left:8px; }
+  .flow { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:720px) { .grid2 { grid-template-columns:1fr; } }
+  .flow .stat b { font-size:19px; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:12px;
+            padding:14px 16px; margin-bottom:12px; }
+  .panel h4 { margin:0 0 8px; font-size:13px; color:var(--dim); font-weight:600; }
+  table.flow-t { width:100%; border-collapse:collapse; font-size:13px; }
+  table.flow-t th { text-align:right; color:var(--dim); font-weight:500; padding:4px 6px; font-size:12px; }
+  table.flow-t th:first-child, table.flow-t td:first-child { text-align:left; }
+  table.flow-t td { padding:5px 6px; text-align:right; color:var(--mid);
+                     border-top:1px solid var(--line); font-variant-numeric:tabular-nums; }
+  .up { color:#ef4444; } .down { color:#22c55e; }
+  table.flow-t td.up { color:#ef4444; } table.flow-t td.down { color:#22c55e; }
+  table.flow-t { table-layout:fixed; }
+  table.flow-t th:nth-child(1), table.flow-t td:nth-child(1) { width:52%; }
+  .sector h3 { display:flex; align-items:center; gap:10px; }
+  .stocks { width:100%; border-collapse:collapse; font-size:13px; margin-top:6px; }
+  .stocks th { text-align:left; color:var(--dim); font-weight:500; font-size:12px;
+                padding:6px 6px; border-bottom:1px solid var(--line); }
+  .stocks td { padding:7px 6px; border-bottom:1px solid var(--line); color:var(--mid);
+                font-variant-numeric:tabular-nums; }
+  .stocks tr:last-child td { border-bottom:none; }
+  .dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:5px; }
+  .d-green { background:#22c55e; } .d-amber { background:#f59e0b; } .d-red { background:#ef4444; }
+  .links a { color:var(--dim); text-decoration:none; margin-right:8px; font-size:12px; }
+  .links a:hover { color:var(--accent); }
+  footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--line);
+            color:var(--dim); font-size:12px; line-height:1.9; }
+  @media (max-width:600px) { .stats { grid-template-columns:repeat(2,1fr); } .flow { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>新闻联播 · 每日汇总</h1>
+    <div class="sub">2026-11-20 ｜ 数据源：央视网《新闻联播》 ｜
+      <a href="index.html" style="color:var(--accent);text-decoration:none">往期归档 →</a></div>
+  </header>
+
+  <div class="notice">
+    条目与正文为真实抓取；解读由模型生成，逐条通过 G1/G2/G3/G5 闸门，未通过者不出现在页面。排序尚未接入，当前按播出顺序排列。
+  </div>
+
+  <div id="tts-bar">
+    <button id="tts-all" type="button">▶ 连续播放</button>
+    <button id="tts-stop" type="button">■ 停止</button>
+    <span id="tts-status"></span>
+    <span style="margin-left:auto;font-size:11px;color:var(--dim)">每条简报独立音频 · 神经网络语音</span>
+  </div>
+
+  
+
+  <div class="stats" style="">
+    <div class="stat"><b>18</b><span>处理单元</span></div>
+    <div class="stat"><b>11</b><span>独立新闻</span></div>
+    <div class="stat"><b>7</b><span>快讯子条</span></div>
+    <div class="stat"><b>6,281</b><span>正文总字数</span></div>
+  </div>
+
+  
+
+  <h2>今日解读</h2>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#01</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">889字</span>
+          <button class="tts-btn play-btn" type="button" data-src="audio/2026-11-20/01.mp3" aria-label="播放本条简报">🔊 播放简报</button>
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDEgft2MM1q6MDFk4gWFLoi261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>习近平会见印度尼西亚总统</h3>
+        <p class="brief">11月20日，习近平在深圳会见印尼总统普拉博沃，两国元首宣布启动全面经济伙伴关系协定谈判。双方将抓好雅万高铁、“两国双园”等大项目，深化能矿资源、人工智能、数字经济、清洁能源合作。这为两国企业带来投资与贸易机会，印尼方面表示欢迎中资企业并承诺提供稳定营商环境。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>元首会晤宣布启动全面经济伙伴关系协定谈判，合作清单新增人工智能、数字经济、清洁能源和蓝色伙伴关系。</p></div>
+            <div class="layer"><b>权力</b><p>国家主席与总统共同宣布，层级高，与既有战略合作目标一致，无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>未提及具体资金、考核指标、企业名单或标准，仅有方向性表述。</p></div>
+            <div class="layer"><b>商业</b><p>需求侧：印尼欢迎中资投资并承诺营商环境，普通企业可关注相关领域合作机会。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能谈判周期长且细节未定，短期难落地为具体商业合同。</p>
+          <p class="falsify"><b>证伪条件</b>若后续未公布谈判时间表或具体合作项目清单，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#02</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">764字</span>
+          <button class="tts-btn play-btn" type="button" data-src="audio/2026-11-20/02.mp3" aria-label="播放本条简报">🔊 播放简报</button>
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDEiGAnSc6KqIeDYPTcybys261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>习近平会见澳大利亚总理</h3>
+        <p class="brief">11月20日上午，习近平在深圳会见来华出席亚太经合组织领导人非正式会议的澳大利亚总理阿尔巴尼斯。习近平提出4点意见，涉及互信、农业能源矿产与绿色经济等合作、2027年“中澳旅游年”、多边协作。澳方承诺坚持一个中国政策。双方以明年建交55周年为契机推动关系发展，人文与新兴领域交流将增多。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>以建交55周年为契机提4点意见，新增2027年“中澳旅游年”提法</p></div>
+            <div class="layer"><b>权力</b><p>元首级会见，与稳定周边、扩大开放目标一致，无冲突</p></div>
+            <div class="layer"><b>兑现</b><p>仅有旅游年与4点意见方向，无资金、考核、名单、标准</p></div>
+            <div class="layer"><b>商业</b><p>旅游、人文、绿色能源数字合作方向属需求侧信号，普通人可关注但无具体入口</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能四点意见停留在表态，旅游年与新兴合作缺少落地安排</p>
+          <p class="falsify"><b>证伪条件</b>若后续无旅游年执行细则或合作项目清单，这条判断就是错的</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#03</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">766字</span>
+          <button class="tts-btn play-btn" type="button" data-src="audio/2026-11-20/03.mp3" aria-label="播放本条简报">🔊 播放简报</button>
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDEzbwL6LBWTdKXq7hPbigB261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>习近平会见新加坡总理</h3>
+        <p class="brief">11月20日，习近平在深圳会见新加坡总理黄循财。习近平提出启动中新自贸协定4.0版谈判，在数字经济、绿色发展、人工智能等领域打造合作成果。黄循财重申一个中国政策，愿深化贸易、产供链、人工智能合作。双方将推动全方位高质量前瞻性伙伴关系，影响两国企业合作方向与亚太区域协作。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>新增“自贸协定4.0版谈判”提法，合作领域明确列出数字经济、绿色发展、人工智能。</p></div>
+            <div class="layer"><b>权力</b><p>国家主席会见总理，层级高，与既有中新全方位伙伴关系目标一致，无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>仅启动谈判，无具体资金、考核指标、企业名单或行业标准。</p></div>
+            <div class="layer"><b>商业</b><p>需求侧方向明确，但普通人暂难直接接入，需等谈判落地和项目细化。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能谈判周期长，短期无实质商业机会。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无自贸协定4.0版谈判实质推进或合作项目落地，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#04</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">853字</span>
+          <button class="tts-btn play-btn" type="button" data-src="audio/2026-11-20/04.mp3" aria-label="播放本条简报">🔊 播放简报</button>
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDE40qLMB09dHSVmkKvuL7y261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>习近平会见泰国总理</h3>
+        <p class="brief">11月20日，习近平在深圳会见泰国总理阿努廷。双方表示加强经贸、科技、数字经济合作，培育人工智能、新能源汽车、航空航天等新增长点，并打击网赌电诈。这推动中泰合作向科创产业延伸，为相关企业带来方向性机会。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>提法上新增人工智能、新能源汽车、航空航天等合作新增长点，并明确打击网赌电诈。</p></div>
+            <div class="layer"><b>权力</b><p>元首会见定调，与既有中泰合作目标一致，无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>未提及具体资金、考核指标、企业名单或标准。</p></div>
+            <div class="layer"><b>商业</b><p>需求侧方向明确，但无具体项目，普通人暂难直接承接。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能这些新增长点仅停留在表态，缺乏后续落地机制。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无具体合作项目或政策细则出台，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#05</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">693字</span>
+          <button class="tts-btn play-btn" type="button" data-src="audio/2026-11-20/05.mp3" aria-label="播放本条简报">🔊 播放简报</button>
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDELudi9VCkIgK9GR7CDjZk261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>习近平会见马来西亚总理</h3>
+        <p class="brief">11月20日中午，习近平在深圳会见来华出席亚太经合组织领导人非正式会议的马来西亚总理安瓦尔。双方就深化战略协作、高质量运营重点项目、做大农产品贸易、加强人工智能等新兴领域合作达成共识。马方坚定恪守一个中国政策。此访推动中马命运共同体建设走深走实，为双边经贸与新兴领域合作提供方向。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>提法延续去年4月构建高水平战略性中马命运共同体共识，强调开启新的“黄金50年”。</p></div>
+            <div class="layer"><b>权力</b><p>国家主席会见总理，属高层外交，与既有合作目标一致，无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>提及高质量建设和运营好重点项目、做大做优农产品贸易，但无具体金额、考核或名单。</p></div>
+            <div class="layer"><b>商业</b><p>方向涉及基础设施、农产品贸易、人工智能等，普通人可关注相关贸易与项目机会，但缺细节。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能合作共识停留在战略表态，具体项目落地节奏和商业机会有限。</p>
+          <p class="falsify"><b>证伪条件</b>若后续公布重点项目清单或农产品贸易具体额度，则判断合作缺细节为错。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#06</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">550字</span>
+          <button class="tts-btn play-btn" type="button" data-src="audio/2026-11-20/06.mp3" aria-label="播放本条简报">🔊 播放简报</button>
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDEUoswLbWhceWdvjaiLMpU261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>李强同澳大利亚总理举行第十一轮中澳总理年度会晤</h3>
+        <p class="brief">20日下午，李强在京同澳大利亚总理阿尔巴尼斯举行第十一轮中澳总理年度会晤，共同发表《中澳总理年度会晤联合成果声明》，吴政隆出席。明年是中澳建交55周年。双方提出推动双边贸易扩大规模、优化结构，打造绿色低碳、新能源汽车、人工智能等新兴领域合作亮点，并办好明年“中澳旅游年”。</p>
+        <details open>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>会晤延续年度机制，新增绿色低碳、新能源汽车、人工智能等新兴领域合作提法，并设明年“中澳旅游年”。</p></div>
+            <div class="layer"><b>权力</b><p>总理层级会晤并发表联合成果声明，与既有经贸合作方向一致，未见冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>仅有方向性表述，无金额、考核指标、企业名单或具体标准。</p></div>
+            <div class="layer"><b>商业</b><p>偏向需求侧开放信号，旅游、人文及新兴领域合作方向明确，普通人可关注但暂无具体入口。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能新兴领域合作仅停留在表态，缺少可执行安排。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无具体贸易投资举措或“中澳旅游年”无落地安排，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#07</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">314字</span>
+          <button class="tts-btn play-btn" type="button" data-src="audio/2026-11-20/07.mp3" aria-label="播放本条简报">🔊 播放简报</button>
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDEXcLcHiflj9zgb5KBnsOv261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>赵乐际会见澳大利亚总理</h3>
+        <p class="brief">全国人大常委会委员长赵乐际20日下午在北京会见澳大利亚总理阿尔巴尼斯。赵乐际表示，中方愿同澳方以明年中澳建交55周年为契机，增进战略互信、拓展务实合作，中国全国人大愿同澳联邦议会加强交流合作。阿尔巴尼斯表示支持澳中立法机构继续保持良好交往。双方以立法机构交往为两国关系提供支撑。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>会见口径落在立法机构交流与建交55周年契机上，未出现新的经贸提法。</p></div>
+            <div class="layer"><b>权力</b><p>全国人大常委会委员长会见澳总理，属议会外交层级，与既有对澳关系方向一致。</p></div>
+            <div class="layer"><b>兑现</b><p>原文只有交流合作与经验分享的表述，没有资金、考核、名单或标准。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关，仅为立法机构层面的交往表态。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能立法机构交流后续带动具体经贸议题落地。</p>
+          <p class="falsify"><b>证伪条件</b>若后续出现中澳具体经贸协议或清单，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#08</span>
+          <span class="badge s-mid">信号 中</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">164字</span>
+          <button class="tts-btn play-btn" type="button" data-src="audio/2026-11-20/08.mp3" aria-label="播放本条简报">🔊 播放简报</button>
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDEAnHbzTm20Tbs60BuD5Gw261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>丁薛祥将访问新加坡并主持中新双边合作机制会议</h3>
+        <p class="brief">应新加坡副总理颜金勇邀请，中共中央政治局常委、国务院副总理丁薛祥将于11月22日至23日访问新加坡，同颜金勇共同主持中新双边合作联委会第二十二次会议、中新苏州工业园区联合协调理事会第二十七次会议、中新天津生态城联合协调理事会第十八次会议、中新（重庆）战略性互联互通示范项目联合协调理事会第十次会议，延</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>提法延续既有四个合作机制名称，会议届次按序递增，未见新设机制或口径变化。</p></div>
+            <div class="layer"><b>权力</b><p>中共中央政治局常委、国务院副总理层级出访并主持机制会议，与既有中新合作目标一致，无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>原文未提及资金规模、考核指标、项目名单或标准调整。</p></div>
+            <div class="layer"><b>商业</b><p>高层机制会议确认合作方向，但原文无具体供给或需求措施，普通人暂难直接承接。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能会议仅按惯例轮值主持，不产生新的可操作商业安排。</p>
+          <p class="falsify"><b>证伪条件</b>若会后公布新增资金、项目清单或标准调整，则本条“缺细节”的判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#09</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">231字</span>
+          
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDEJGRLSG3QAD7Q4vcwoDsb261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>第三届兰花奖颁奖典礼在京举行</h3>
+        <p class="brief">11月20日，第三届兰花奖颁奖典礼在京举行，10位国际友人获奖，包括法国的勒克莱齐奥、新加坡的马凯硕、美国的亚当·福斯特等。该奖旨在践行全球文明倡议，表彰促进中外文明交流互鉴的贡献者。与会嘉宾提出平等相待、守护文化根脉、加强数智赋能等方向。此举面向国际友人，推动文明对话与共享。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>延续全球文明倡议提法，新增数智赋能表述。</p></div>
+            <div class="layer"><b>权力</b><p>国际文化交流奖项，与既有目标无冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>仅公布10人获奖名单，无资金或考核标准。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能数智赋能提法为后续数字文化合作留出空间。</p>
+          <p class="falsify"><b>证伪条件</b>若后续出台具体数智文化合作项目清单，则弱信号判断有误。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#10</span>
+          <span class="badge s-high">信号 强</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">75字</span>
+          
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDEGL4QDhiUs6yVr7FCvHwC261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>财政部成功在香港发行美元主权债券</h3>
+        <p class="brief">财政部在香港发行20亿美元3年期主权债券，利率4.821%，认购金额723亿美元，为发行额的36倍。投资者认购踊跃。这显示离岸美元市场对主权信用资产的需求，为中资发行体提供定价参照。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>发行规模20亿美元、期限3年、利率4.821%，认购达36倍，属常规主权债操作。</p></div>
+            <div class="layer"><b>权力</b><p>财政部主导的美元主权债发行，与既有利率环境及外汇管理目标不冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>有实际发行金额、利率和认购倍数，资金已落地。</p></div>
+            <div class="layer"><b>商业</b><p>主权债供给面向机构，普通人无法直接参与，但为相关美元资产提供定价基准。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能高认购倍数主要反映短期避险配置，不代表持续融资需求。</p>
+          <p class="falsify"><b>证伪条件</b>若后续同类主权美元债发行利率明显上升或认购倍数大幅下降，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#11</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">116字</span>
+          
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDEGL4QDhiUs6yVr7FCvHwC261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>中国147项可持续发展指标接近或实现2030年目标</h3>
+        <p class="brief">11月20日，中国科学院牵头撰写的《地球大数据支撑可持续发展目标报告（2026）》在联合国网站发布。截至2025年年底，联合国纳入评估的234个可持续发展目标指标中，中国有147项接近或实现2030年目标。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>以联合国评估口径发布234项指标中147项接近或实现2030年目标。</p></div>
+            <div class="layer"><b>权力</b><p>中科院牵头报告在联合国网站发布，属国际机构评估口径，与国内目标不冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>仅有指标评估结果，未涉及资金、考核、名单或标准等兑现工具。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能该报告仅为阶段性评估，不改变具体领域政策节奏。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无配套资金或考核措施落地，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#12</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">103字</span>
+          
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDEGL4QDhiUs6yVr7FCvHwC261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>我国发现距今39.5亿年亚洲最古老岩石</h3>
+        <p class="brief">自然资源部中国地质调查局11月20日披露，科研人员在河北卢龙县发现距今39.5亿年的古老岩石，把我国最古老岩石记录往前推进1.5亿年，与世界最古老岩石的年龄差距缩小到5000万年。这一发现改写了我国最古老岩石的记录，也缩小了与世界最古老岩石的年龄差距。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>提法从一般地质调查转为“亚洲最古老岩石”这一记录性表述。</p></div>
+            <div class="layer"><b>权力</b><p>自然资源部下属机构发布科研发现，属学术成果口径，无政策目标冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>原文未出现资金、考核、名单或标准等兑现要素。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能该发现后续带动地质科研与科普旅游投入。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无科研经费或地方文旅项目跟进，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#13</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">87字</span>
+          
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDEGL4QDhiUs6yVr7FCvHwC261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>《高端访谈》今晚播出对秘鲁总统藤森庆子的专访</h3>
+        <p class="brief">11月20日，总台央视新闻频道《高端访谈》栏目将播出对秘鲁总统藤森庆子的专访。藤森庆子表示，亚太经合组织会议带来巨大合作机遇，她期待和中方一道继续深化多领域交流合作。这一表态面向秘鲁与中方，方向是借亚太经合组织会议平台推进多领域交流合作。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>以专访形式释放秘鲁总统对亚太经合组织会议合作机遇的积极表态，提法为深化多领域交流合作。</p></div>
+            <div class="layer"><b>权力</b><p>央视新闻频道栏目播出外国总统专访，属媒体外交层级，与既有合作方向不冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>原文未出现资金、考核、名单或标准等兑现性内容。</p></div>
+            <div class="layer"><b>商业</b><p>仅有合作方向表态，无具体供给或需求信息，普通人暂难直接承接。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能专访仅为会议期间的外交礼仪安排，不附带具体合作项目。</p>
+          <p class="falsify"><b>证伪条件</b>若后续出现具体合作清单或资金安排，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#14</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-watch">观察</span>
+          <span class="len">150字</span>
+          
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDE98gUPKcE9N0uYRxrT915261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>推动亚太合作迈出新步伐 开创新局面——国际社会高度评价习近平主席重要讲话</h3>
+        <p class="brief">国际人士表示，习近平主席在亚太经合组织工商领导人峰会主旨演讲及第三十三次领导人非正式会议上重要讲话，围绕建设亚太共同体提出中国主张和中国方案，为续写“亚太奇迹”擘画蓝图。这将推动亚太合作迈出新步伐、开创新局面，为地区乃至世界发展注入信心与力量。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>文本层：以“亚太共同体”提法统摄工商峰会和领导人会议两场讲话，突出中国方案。</p></div>
+            <div class="layer"><b>权力</b><p>权力层：国际人士评价属外方反馈，非国内政策文件，与既有亚太合作目标不冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>兑现层：原文无资金、考核、名单或标准等可执行细节。</p></div>
+            <div class="layer"><b>商业</b><p>商业层：仅方向性表态，无具体供需信号，普通人难以直接承接。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能这只是外交场合的例行评价，缺乏后续落地安排。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无具体合作项目或机制安排出台，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#15</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">66字</span>
+          
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDEGW0A4OaVWgCG4NN7uTJd261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>国际人士表示中俄美元首会晤为世界和平与稳定注入信心和动力</h3>
+        <p class="brief">国际人士表示，中俄美元首会晤是一次历史性的会晤，为大国协调互动构建了新范式，为世界和平与稳定注入信心和动力。这一表态传递出大国关系趋向协调的信号，对关注国际环境变化的各方形成稳定预期。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>文本以“历史性会晤”“新范式”定性，属正面表态口径。</p></div>
+            <div class="layer"><b>权力</b><p>国际人士评价，非官方文件，与既有外交目标一致。</p></div>
+            <div class="layer"><b>兑现</b><p>无资金、考核、名单或标准等兑现内容。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能仅是外交辞令，缺乏后续实质协调动作。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无具体合作文件或机制落地，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#16</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">154字</span>
+          
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDElQu6FS8Ljg7rOfUJq2yg261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>日本民众集会反对高市政府扩军修宪动向</h3>
+        <p class="brief">19日，约13000名日本民众在东京国会议事堂前集会，反对高市政府推动修宪、解禁杀伤性武器出口及扩充军费。抗议者称政府无视民生，借“防卫”修改“安保三文件”发展进攻力量。此事反映日本国内对扩军修宪的抵制，可能牵制政策推进节奏。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>文本层：抗议者将政府举措定性为“再军事化”，并强调守护和平宪法。</p></div>
+            <div class="layer"><b>权力</b><p>权力层：民众集会属社会表态，不直接改变政策文种或层级。</p></div>
+            <div class="layer"><b>兑现</b><p>兑现层：原文未提及钱、考核、名单或标准等具体兑现工具。</p></div>
+            <div class="layer"><b>商业</b><p>商业层：与生意基本无关。</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能集会规模有限，对政策实际走向影响微弱。</p>
+          <p class="falsify"><b>证伪条件</b>若后续日本政府因抗议而暂停或调整修宪及武器出口议程，则“影响有限”的判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#17</span>
+          <span class="badge s-low">信号 弱</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">162字</span>
+          
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDElQu6FS8Ljg7rOfUJq2yg261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>也门胡塞武装称打击沙特境内多地目标</h3>
+        <p class="brief">也门胡塞武装19日称对沙特境内多个目标发动四次军事行动，目标包括利雅得金融中心和国际机场、朱拜勒石化公司、海米斯穆谢特空军基地。沙特称利雅得阿卜杜拉国王金融区本月第二次遇袭，阿拉伯国家联盟谴责袭击导致事态升级。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>胡塞武装主动公布袭击沙特多地目标，沙特与阿盟以遇袭和谴责回应。</p></div>
+            <div class="layer"><b>权力</b><p>武装声明与地区组织谴责并行，冲突叙事未涉及具体政策目标。</p></div>
+            <div class="layer"><b>兑现</b><p>原文无资金、考核、名单或标准等兑现信息。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能此类袭击扰动能源与航运预期，间接影响相关行业成本。</p>
+          <p class="falsify"><b>证伪条件</b>若后续无任何经济设施受损或市场波动，这条判断就是错的。</p>
+        </details>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span class="no">#18</span>
+          <span class="badge s-noise">信号 噪音</span>
+          <span class="badge a-none">无关</span>
+          <span class="len">144字</span>
+          
+          <a class="src" href="https://tv.cctv.com/2026/11/20/VIDElQu6FS8Ljg7rOfUJq2yg261120.shtml" target="_blank" rel="noopener">原文 ↗</a>
+        </div>
+        <h3>巴称加沙地带多地遭以军袭击致人员伤亡</h3>
+        <p class="brief">巴勒斯坦媒体19日报道，加沙地带北部加沙城、中部努赛赖特难民营和南部汗尤尼斯等多地遭以军袭击，造成3名巴勒斯坦平民死亡、多人受伤，多栋房屋和设施受损。此前一天，以安全部队在停火协议“黄线”以西展开军事行动，哈马斯谴责此举严重违反停火协议。冲突持续对当地平民安全与停火稳定构成压力。</p>
+        <details>
+          <summary>四层解读</summary>
+          <div class="layers">
+            <div class="layer"><b>文本</b><p>报道以巴方媒体为口径，突出平民伤亡与停火协议被违反的提法。</p></div>
+            <div class="layer"><b>权力</b><p>冲突双方各执停火协议解释，行动与既有停火目标直接冲突。</p></div>
+            <div class="layer"><b>兑现</b><p>原文未提及钱、考核、名单或标准等兑现要素。</p></div>
+            <div class="layer"><b>商业</b><p>与生意基本无关</p></div>
+          </div>
+          <p class="against"><b>反方一句</b>但也可能该袭击事件属于局部摩擦，未改变停火协议整体框架。</p>
+          <p class="falsify"><b>证伪条件</b>若后续报道显示停火协议全面破裂并引发大规模军事升级，这条判断就是错的。</p>
+        </details>
+      </article>
+
+  
+  <h2>今日资金面<span class="caliber">估算口径 · 非席位真实买卖</span></h2>
+  <div class="flow">
+    <div class="stat"><b class="down">-57.3</b><span>全市场净流入（亿元）</span></div>
+    <div class="stat"><b>金融行业</b><span>流入第一 +47.45 亿</span></div>
+    <div class="stat"><b>汽车制造</b><span>流出第一 -16.02 亿</span></div>
+  </div>
+  <div class="grid2">
+    <div class='panel'><h4>行业 · 净流入 Top5</h4><table class='flow-t'><thead><tr><th>板块</th><th>净流入(亿)</th><th>涨跌幅</th></tr></thead><tbody><tr><td>金融行业</td><td class="up">+47.45</td><td class="up">+1.93%</td></tr><tr><td>农林牧渔</td><td class="up">+15.36</td><td class="up">+0.08%</td></tr><tr><td>酿酒行业</td><td class="up">+7.68</td><td class="up">+0.24%</td></tr><tr><td>煤炭行业</td><td class="up">+6.83</td><td class="up">+0.86%</td></tr><tr><td>电力行业</td><td class="up">+4.00</td><td class="up">+0.45%</td></tr></tbody></table></div>
+    <div class='panel'><h4>行业 · 净流出 Top5</h4><table class='flow-t'><thead><tr><th>板块</th><th>净流入(亿)</th><th>涨跌幅</th></tr></thead><tbody><tr><td>汽车制造</td><td class="down">-16.02</td><td class="down">-1.89%</td></tr><tr><td>电子器件</td><td class="down">-14.47</td><td class="down">-3.74%</td></tr><tr><td>化工行业</td><td class="down">-12.52</td><td class="down">-3.84%</td></tr><tr><td>服装鞋类</td><td class="down">-9.94</td><td class="down">-2.69%</td></tr><tr><td>生物制药</td><td class="down">-8.19</td><td class="down">-2.21%</td></tr></tbody></table></div>
+  </div>
+  <div class='panel'><h4>概念 · 净流入 Top5</h4><table class='flow-t'><thead><tr><th>板块</th><th>净流入(亿)</th><th>涨跌幅</th></tr></thead><tbody><tr><td>融资融券</td><td class="up">+95.18</td><td class="up">+1.02%</td></tr><tr><td>基金重仓</td><td class="up">+65.00</td><td class="up">+1.53%</td></tr><tr><td>保险重仓</td><td class="up">+64.82</td><td class="up">+1.90%</td></tr><tr><td>含H股</td><td class="up">+59.92</td><td class="up">+1.74%</td></tr><tr><td>超大盘</td><td class="up">+50.80</td><td class="up">+2.35%</td></tr></tbody></table></div>
+
+  <h2>板块与候选<span class="caliber">规则筛选 · 非推荐</span></h2>
+  
+    <article class="card sector">
+      <div class="meta">
+        <span class="no">金融行业</span>
+        <span class="badge s-high">净流入 +47.45 亿</span>
+        <span class="badge s-mid">+1.93%</span>
+        <span class="len">成分 51 只 → 入选 5</span>
+      </div>
+      <table class="stocks">
+        <thead><tr><th>代码</th><th>名称</th><th>涨跌幅</th><th>成交额(亿)</th><th>市值(亿)</th><th>拥挤度</th><th>K线</th></tr></thead>
+        <tbody><tr><td>600036</td><td>招商银行</td><td class="up">+1.57%</td><td>65.8</td><td>11097</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/600036/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sh600036.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SH600036' target='_blank' rel='noopener'>雪球</a></td></tr><tr><td>601318</td><td>中国平安</td><td class="up">+1.46%</td><td>64.6</td><td>10042</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/601318/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sh601318.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SH601318' target='_blank' rel='noopener'>雪球</a></td></tr><tr><td>601398</td><td>工商银行</td><td class="up">+3.30%</td><td>44.7</td><td>33502</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/601398/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sh601398.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SH601398' target='_blank' rel='noopener'>雪球</a></td></tr><tr><td>601166</td><td>兴业银行</td><td class="up">+1.04%</td><td>35.4</td><td>4296</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/601166/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sh601166.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SH601166' target='_blank' rel='noopener'>雪球</a></td></tr><tr><td>601288</td><td>农业银行</td><td class="up">+1.57%</td><td>34.0</td><td>27194</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/601288/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sh601288.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SH601288' target='_blank' rel='noopener'>雪球</a></td></tr></tbody>
+      </table>
+    </article>
+    <article class="card sector">
+      <div class="meta">
+        <span class="no">农林牧渔</span>
+        <span class="badge s-high">净流入 +15.36 亿</span>
+        <span class="badge s-mid">+0.08%</span>
+        <span class="len">成分 60 只 → 入选 5</span>
+      </div>
+      <table class="stocks">
+        <thead><tr><th>代码</th><th>名称</th><th>涨跌幅</th><th>成交额(亿)</th><th>市值(亿)</th><th>拥挤度</th><th>K线</th></tr></thead>
+        <tbody><tr><td>002714</td><td>牧原股份</td><td class="up">+0.90%</td><td>18.2</td><td>2589</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/002714/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sz002714.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SZ002714' target='_blank' rel='noopener'>雪球</a></td></tr><tr><td>600127</td><td>金健米业</td><td class="up">+2.14%</td><td>10.6</td><td>52</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/600127/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sh600127.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SH600127' target='_blank' rel='noopener'>雪球</a></td></tr><tr><td>002157</td><td>正邦科技</td><td class="up">+3.47%</td><td>7.9</td><td>276</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/002157/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sz002157.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SZ002157' target='_blank' rel='noopener'>雪球</a></td></tr><tr><td>002311</td><td>海大集团</td><td class="up">+0.91%</td><td>5.6</td><td>825</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/002311/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sz002311.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SZ002311' target='_blank' rel='noopener'>雪球</a></td></tr><tr><td>000592</td><td>平潭发展</td><td class="down">-1.80%</td><td>5.7</td><td>105</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/000592/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sz000592.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SZ000592' target='_blank' rel='noopener'>雪球</a></td></tr></tbody>
+      </table>
+    </article>
+    <article class="card sector">
+      <div class="meta">
+        <span class="no">酿酒行业</span>
+        <span class="badge s-high">净流入 +7.68 亿</span>
+        <span class="badge s-mid">+0.24%</span>
+        <span class="len">成分 33 只 → 入选 5</span>
+      </div>
+      <table class="stocks">
+        <thead><tr><th>代码</th><th>名称</th><th>涨跌幅</th><th>成交额(亿)</th><th>市值(亿)</th><th>拥挤度</th><th>K线</th></tr></thead>
+        <tbody><tr><td>600519</td><td>贵州茅台</td><td class="up">+1.75%</td><td>98.0</td><td>18573</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/600519/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sh600519.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SH600519' target='_blank' rel='noopener'>雪球</a></td></tr><tr><td>000858</td><td>五 粮 液</td><td class="down">-1.16%</td><td>18.0</td><td>2816</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/000858/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sz000858.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SZ000858' target='_blank' rel='noopener'>雪球</a></td></tr><tr><td>600809</td><td>山西汾酒</td><td class="down">-1.21%</td><td>10.2</td><td>1574</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/600809/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sh600809.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SH600809' target='_blank' rel='noopener'>雪球</a></td></tr><tr><td>000568</td><td>泸州老窖</td><td class="down">-2.62%</td><td>9.7</td><td>1174</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/000568/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sz000568.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SZ000568' target='_blank' rel='noopener'>雪球</a></td></tr><tr><td>600600</td><td>青岛啤酒</td><td class="down">-0.91%</td><td>3.9</td><td>731</td><td><span class='dot d-green'></span>温和</td><td class='links'><a href='https://stockpage.10jqka.com.cn/600600/' target='_blank' rel='noopener'>同花顺</a><a href='https://quote.eastmoney.com/sh600600.html' target='_blank' rel='noopener'>东财</a><a href='https://xueqiu.com/S/SH600600' target='_blank' rel='noopener'>雪球</a></td></tr></tbody>
+      </table>
+    </article>
+  <div class="notice">
+    选股规则：剔除 ST/退市、剔除已涨停、剔除市值 &lt; 50 亿、剔除成交额 &lt; 1 亿，
+    再按「成交额 65% + 涨幅 35%」排序取前 5。**这是机械筛选，不是推荐**，
+    未做基本面判断，也不构成投资建议。
+  </div>
+
+  
+
+  <footer>
+    本页由 T02「新闻联播每日汇总」流水线生成 ｜ 生成时间 2026-11-20 20:07<br>
+    事实均可回溯至央视网原文；解读为观点，不构成任何投资建议。
+  </footer>
+</div>
+<script>
+/* T02 简报语音播放
+ * 音频由 build_audio.py 预生成（神经网络语音），页面只负责播放。
+ * 每条新闻一个「🔊 播放简报」按钮；顶部「连续播放」按顺序播完当天全部。
+ */
+(function () {
+  var bar = document.getElementById('tts-bar');
+  var status = document.getElementById('tts-status');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('article.card'));
+  var buttons = [];
+
+  for (var i = 0; i < cards.length; i++) {
+    var b = cards[i].querySelector('.play-btn');
+    if (b) buttons.push(b);
+  }
+
+  if (!buttons.length) {
+    if (bar) bar.style.display = 'none';
+    return;
+  }
+
+  var audio = new Audio();
+  audio.preload = 'none';
+
+  var gen = 0;
+  var continuous = false;
+  var current = null;
+
+  function highlight(card) {
+    for (var i = 0; i < cards.length; i++) cards[i].classList.remove('speaking');
+    if (card) {
+      card.classList.add('speaking');
+      try { card.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) {}
+    }
+  }
+
+  function setStatus(t) { if (status) status.textContent = t; }
+
+  function stop() {
+    gen++;
+    continuous = false;
+    current = null;
+    try { audio.pause(); } catch (e) {}
+    audio.removeAttribute('src');
+    highlight(null);
+    setStatus('');
+  }
+
+  function playAt(index, my) {
+    if (my !== gen) return;
+    var btn = buttons[index];
+    if (!btn) { stop(); return; }
+
+    var card = btn.closest('article.card');
+    highlight(card);
+    setStatus('播放中 ' + (index + 1) + '/' + buttons.length);
+
+    audio.src = btn.getAttribute('data-src');
+    audio.onended = function () {
+      if (my !== gen) return;
+      if (continuous && index + 1 < buttons.length) {
+        playAt(index + 1, my);
+      } else {
+        stop();
+      }
+    };
+    audio.onerror = function () {
+      // 语音只保留最近两天，往期页面的按钮会指向已删除的文件
+      stop();
+      setStatus('这条语音已过期（仅当天可听）');
+    };
+
+    var p = audio.play();
+    if (p && p.catch) {
+      p.catch(function () { setStatus('浏览器拦截了自动播放，请再点一次'); });
+    }
+  }
+
+  (function () {
+    for (var i = 0; i < buttons.length; i++) {
+      (function (idx) {
+        buttons[idx].addEventListener('click', function () {
+          stop();
+          var my = gen;
+          playAt(idx, my);
+        });
+      })(i);
+    }
+  })();
+
+  var all = document.getElementById('tts-all');
+  if (all) {
+    all.addEventListener('click', function () {
+      stop();
+      continuous = true;
+      var my = gen;
+      playAt(0, my);
+    });
+  }
+
+  var stopBtn = document.getElementById('tts-stop');
+  if (stopBtn) stopBtn.addEventListener('click', stop);
+
+  window.addEventListener('beforeunload', function () {
+    try { audio.pause(); } catch (e) {}
+  });
+})();
+
+</script>
+</body>
+</html>
